@@ -19,15 +19,48 @@ entry_password = Entry(frame_login, width=20, show='*', font=("Arial", 14))
 entry_password.pack()
 password = "1234"                       # 임시 패스워드 - 파일 입력 예정
 
+class Counter:
+    count = 0
+    def count_up():
+        Counter.count += 1
+    def count_reset():
+        Counter.count = 0
+
 # 함수 영역
+def button_pw_onclick():
+    pass
+    # Counter.count += 1
+    # validation
+    # is_auth_ok
+
+# def count_reset():
+    # Counter.count = 0
+
+# def count_up():
+    # Counter.count += 1
+    
+# def get_entry_text():
+    # input = entry_password.get()
+    # return input
+
+
+# def is_pw_check():
 def get_entry_text():
     if entry_password.get() == password:
-        msgbox.showinfo("확인", "패스워드가 일치합니다")
+        msgbox.showinfo("인증", "인증이 완료되었습니다.")
+        Counter.count_reset()
         frame_login.destroy()
         create_new_frame()
     else:
         msgbox.askretrycancel("경고", "패스워드가 일치하지 않습니다.")
         entry_password.delete(0, END)           # 내용 삭제
+        Counter.count_up()
+        if Counter.count > 5:
+            msgbox.showwarning("경고", "로그인 가능 횟수를 초과했습니다. 앱이 종료됩니다.")
+            app_quit()
+
+def app_quit():
+    main.quit()
 
 # 프레임 변경 함수 - 임시
 def create_new_frame():
@@ -35,9 +68,7 @@ def create_new_frame():
     frame_login2.place(x=20, y=20)
     frame_login2.propagate(0)                # item에 따라서 frame이 줄어들지 않음
 
-
 button_pw = Button(frame_login, text="확인", width=8, command=get_entry_text)
 button_pw.pack(padx=(160, 0), pady=10)
-
 
 main.mainloop()
