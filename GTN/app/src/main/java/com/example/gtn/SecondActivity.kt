@@ -1,6 +1,7 @@
 package com.example.gtn
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.GridView
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
@@ -102,35 +104,41 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
                 var gv = view.findViewById<View>(R.id.tab1_gridView) as GridView
                 var gAdapter = MyGridAdapter(context = cont)
                 gv.adapter = gAdapter
+
+                // 해당 이미지 넘겨주기
+                gv.setOnItemClickListener { adapterView, view, position, id ->
+
+                    var intent = Intent(cont, ThirdActivity::class.java)
+                    var item = gAdapter.getItem(position) as Array<Int>
+                    var itemId = gAdapter.getItemId(position)
+
+                    intent.putExtra("arrayImage", item)
+                    intent.putExtra("Num", position) // 숫자
+                    intent.putExtra("itemId", itemId.toInt())
+                    startActivity(intent)
+                }
             }
 
             if(tabName === "신분증") {
                 // 해당되는 이미지만 불러와야함
-                /*
                 var gv = view.findViewById<View>(R.id.tab2_gridView) as GridView
-                var gAdapter = MyGridAdapter(view)
+                var gAdapter = MyGridAdapter(context = cont)
                 gv.adapter = gAdapter
 
-                 */
             }
 
             if(tabName === "통장사본") {
                 // 해당되는 이미지만 불러와야함
-                /*
                 var gv = view.findViewById<View>(R.id.tab3_gridView) as GridView
-                var gAdapter = MyGridAdapter(view)
+                var gAdapter = MyGridAdapter(context = cont)
                 gv.adapter = gAdapter
-
-                 */
             }
 
             if(tabName === "증명서") {
                 // 해당되는 이미지만 불러와야함
-                /*
                 var gv = view.findViewById<View>(R.id.tab4_gridView) as GridView
-                var gAdapter = MyGridAdapter(view)
+                var gAdapter = MyGridAdapter(context = cont)
                 gv.adapter = gAdapter
-                */
             }
         }
     }
@@ -155,11 +163,11 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
         }
 
         override fun getItem(p0: Int): Any {
-            return 0
+            return imageId
         }
 
         override fun getItemId(p0: Int): Long {
-            return 0
+            return imageId[p0].toLong()
         }
 
         override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
@@ -169,9 +177,6 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
             imageview.setPadding(5, 5, 5, 5)
 
             imageview.setImageResource(imageId[p0])
-
-            // when image clicked, inflate viewpage with intent
-
 
             return imageview
         }

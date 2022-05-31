@@ -1,9 +1,8 @@
 package com.example.gtn
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.util.regex.Pattern
 
@@ -24,8 +23,8 @@ class MainActivity : AppCompatActivity(){
             var password = edittext_password.text.toString()
             if(password == "password"){
                 // goto mainpage
-                Toast.makeText(this, "비밀번호가 올바릅니다.", Toast.LENGTH_SHORT).show()
-                edittext_password.setText("")
+                var intent = Intent(applicationContext, SecondActivity::class.java)
+                startActivity(intent)
             }
             // 유효성검사
             else if (!Pattern.matches("^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-zA-Z]).{8,20}$", password)) {
