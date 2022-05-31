@@ -7,7 +7,7 @@ from werkzeug.utils import secure_filename
 import requests
 import easyocr
 from flask_session import Session
-from algorithm import Algorithm
+from algorithm import Algorithm                 # 개인정보 탐지 알고리즘 관련
 
 
 # app 선언 영역
