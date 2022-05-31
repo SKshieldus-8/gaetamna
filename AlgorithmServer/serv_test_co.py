@@ -7,11 +7,14 @@ from werkzeug.utils import secure_filename
 import requests
 import easyocr
 from flask_session import Session
+from algorithm import Algorithm
+
+
+# app 선언 영역
+app = Flask(__name__)
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # 허용 파일 확장자
-FILE_DIR = 'AlgorithmServer/files'                                  # 파일 저장 경로
-
-app = Flask(__name__)
+FILE_DIR = 'AlgorithmServer/files'                  # 파일 저장 경로
 
 # 디렉토리가 없는 경우 디렉토리 생성
 if not os.path.exists(FILE_DIR):
@@ -22,16 +25,6 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# 개인정보 탐지 알고리즘 관련
-class Algorithm():
-    # 주민번호 정규식 판단
-    def ssn_check(input):
-        ssn = re.compile("^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$")
-
-        if ssn.match(input):
-            return True
-        else:
-            return False
 
 # Naver Clova OCR 관련
 class ClovaOcr():
@@ -83,11 +76,11 @@ class ActOnServer:
         return ClovaOcr.coordinate
 
     # 최종 반환 .json 파일 추출 함수
-    def extract_coordinate_json(coordinate):
-        pass
+    # def extract_coordinate_json(coordinate):
         # with open('AlgorithmServer/clovarocr_coordinate.json', 'w', encoding='utf-8') as outfile:
         # with open('AlgorithmServer/clovaocr_multi_coordinate.json', 'w', encoding='utf-8') as outfile:
             # json.dump(coordinate, outfile, indent=4, ensure_ascii=False)
+
 
 # app 구성 영역
 @app.route('/', methods=['GET', 'POST'])
