@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 # import requests
 import easyocr
 from flask_session import Session
+from algorithm import Algorithm                 # 개인정보 탐지 알고리즘 관련
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # 허용 파일 확장자
 FILE_DIR = 'AlgorithmServer/files'                  # 파일 저장 경로
@@ -49,16 +50,6 @@ class EasyOcr():
         # with open('./AlgorithmServer/easyocr_multi_coordinate.json', 'w', encoding='utf-8') as outfile:
             # json.dump(coordinate, outfile, indent=4, ensure_ascii=False)
 
-# 개인정보 탐지 알고리즘 관련
-class Algorithm():
-    # 주민번호 정규식 판단
-    def ssn_check(input):
-        ssn = re.compile("^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$")
-
-        if ssn.match(input):
-            return True
-        else:
-            return False
 
 # app 구성 영역
 @app.route('/', methods=['GET', 'POST'])
@@ -87,6 +78,7 @@ def receive():
             with open(FILE_DIR + '/' + str(os.path.splitext(basename)[0])+'_easyocr_co.json', 'w', encoding='utf-8') as outfile:
                 json.dump(EasyOcr.get_coordinate(parsed), outfile, indent=4, ensure_ascii=False)
 
+    # return json.dump(EasyOcr.get_coordinate(parsed), FILE_DIR, indent=4, ensure_ascii=False)
     return 'Done!'
     '''
     <!doctype html>

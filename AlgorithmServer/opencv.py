@@ -17,8 +17,8 @@ def reorderPts(pts):  # 꼭지점 순서 정렬
 
 
 # 영상 불러오기
-filename = "C:/gaetamna/AlgorithmServer/registcard_test.png"
-# filename = "registcard_test.png"
+filename = "C:/gaetamna/AlgorithmServer/tilted_test.png"
+# filename = "./registcard_test.png"
 if len(sys.argv) > 1:       #py파일을 실행 시키면서 인자값을 넣으면 그 인자값을 filename으로 지정
     filename = sys.argv[1]  #ex) opencv2.py ./test.jpg
 

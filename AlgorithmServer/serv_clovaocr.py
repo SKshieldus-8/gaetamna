@@ -6,23 +6,12 @@ import re
 # import numpy as np
 # import cv2
 # from PIL import ImageFont, ImageDraw, Image
+from algorithm import Algorithm                 # 개인정보 탐지 알고리즘 관련
 
 
 # 앱과의 HTTPS 통신 관련
 class HttpsWithApp():
     pass
-
-# 개인정보 탐지 알고리즘 관련
-class Algorithm():
-    # 주민번호 정규식 판단
-    def ssn_check(input):
-        ssn = re.compile(
-            "^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$")
-
-        if ssn.match(input):
-            return True
-        else:
-            return False
 
 # Naver Clova OCR 관련
 class ClovaOcr():
