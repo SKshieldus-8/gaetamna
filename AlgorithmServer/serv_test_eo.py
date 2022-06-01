@@ -7,10 +7,12 @@ import easyocr
 from flask_session import Session
 from algorithm import Algorithm                 # 개인정보 탐지 알고리즘 관련
 
+
+# app 선언 영역
+app = Flask(__name__)
+
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # 허용 파일 확장자
 FILE_DIR = 'AlgorithmServer/files'                  # 파일 저장 경로
-
-app = Flask(__name__)
 
 # 디렉토리가 없는 경우 디렉토리 생성
 if not os.path.exists(FILE_DIR):
