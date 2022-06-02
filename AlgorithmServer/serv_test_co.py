@@ -87,30 +87,34 @@ class ActOnServer:
 
 # HTTP(S) 수신 함수
 def receive():
-    if request.method == 'POST':
-        ClovaOcr.counter = 0                    # 개인정보 갯수 카운터 초기화
-        # 파일이 첨부되어 있는가 확인
-        if 'file' not in request.files:
-            flash('Not allowed file')
-            return redirect(request.url)
+    try:
+        if request.method == 'POST':
+            ClovaOcr.counter = 0                    # 개인정보 갯수 카운터 초기화
+            # 파일이 첨부되어 있는가 확인
+            if 'file' not in request.files:
+                flash('Not allowed file')
+                return redirect(request.url)
 
-        file = request.files['file']
-        # 파일 이름 확인 - 예외처리
-        # To-DO: Try-Except 구문 사용?
-        if file.filename == '':
-            flash("None file")
-            return redirect(request.url)
+            file = request.files['file']
+            # 파일 이름 확인 - 예외처리
+            # To-DO: Try-Except 구문 사용?
+            if file.filename == '':
+                flash("None file")
+                return redirect(request.url)
 
-        # 파일의 형식 내 확인
-        if file and allowed_file(file.filename):
-            filename = FILE_DIR + '/' + secure_filename(file.filename)
-            file.save(filename)
-            basename = os.path.basename(filename)
+            # 파일의 형식 내 확인
+            if file and allowed_file(file.filename):
+                filename = FILE_DIR + '/' + secure_filename(file.filename)
+                file.save(filename)
+                parsed = ActOnServer.check_privacy(ActOnServer.clova_ocr_response(filename))
+                # basename = os.path.basename(filename)
+                os.remove(filename)
+                return json.dumps(parsed, ensure_ascii=False)
 
-            with open(FILE_DIR + '/' + str(os.path.splitext(basename)[0])+'_clova_co.json', 'w', encoding='utf-8') as outfile:
-                json.dump(ActOnServer.check_privacy(ActOnServer.clova_ocr_response(filename)), outfile, indent=4, ensure_ascii=False)
-
-    return 'Done!'
+                # with open(FILE_DIR + '/' + str(os.path.splitext(basename)[0])+'_clova_co.json', 'w', encoding='utf-8') as outfile:
+                    # json.dump(ActOnServer.check_privacy(ActOnServer.clova_ocr_response(filename)), outfile, indent=4, ensure_ascii=False)
+    finally:
+        return 'Nothing'
     '''
     <!doctype html>
     <title>Upload new File</title>
