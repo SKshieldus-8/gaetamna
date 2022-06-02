@@ -75,12 +75,13 @@ def receive():
             filename = FILE_DIR + '/' + secure_filename(file.filename)
             file.save(filename)
             parsed = EasyOcr.reader.readtext(filename)
-            basename = os.path.basename(filename)
+            # basename = os.path.basename(filename)
+            os.remove(filename)
+            return json.dumps(EasyOcr.get_coordinate(parsed), ensure_ascii=False)
 
-            with open(FILE_DIR + '/' + str(os.path.splitext(basename)[0])+'_easyocr_co.json', 'w', encoding='utf-8') as outfile:
-                json.dump(EasyOcr.get_coordinate(parsed), outfile, indent=4, ensure_ascii=False)
+            # with open(FILE_DIR + '/' + str(os.path.splitext(basename)[0])+'_easyocr_co.json', 'w', encoding='utf-8') as outfile:
+                # json.dump(EasyOcr.get_coordinate(parsed), outfile, indent=4, ensure_ascii=False)
 
-    # return json.dump(EasyOcr.get_coordinate(parsed), FILE_DIR, indent=4, ensure_ascii=False)
     return 'Done!'
     '''
     <!doctype html>
