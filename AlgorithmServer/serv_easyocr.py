@@ -12,15 +12,25 @@ from algorithm import Algorithm                 # 개인정보 탐지 알고리�
 class HttpsWithApp():
     pass
 
+        # image = cv2.cvtColor(origin, cv2.COLOR_BGR2RGB)
+class PreProcessing():
+    kernel = np.ones((3,3), dtype=np.uint8)          # 3x3 array 내용 1 생성
+    # canny(or 라플레시안) / histogram / 
+    
+    # 1. Canny (or 라플레시안)
+
+    # 2. 외곽선 찾기 - 배경과 주민등록증 구분
+    # 3. 회전?
+
 # easyOCR 관련
 class EasyOcr():
     # easyocr(인식 언어, gpu 사용 여부), 결과 정보 저장 변수
     reader = easyocr.Reader(['ko', 'en'], gpu=False)
-    # result = reader.readtext('./AlgorithmServer/registcard_test.png')
-    result = reader.readtext('./AlgorithmServer/tilted_test.png')
+    result = reader.readtext('./AlgorithmServer/registcard_test.png')
+    # result = reader.readtext('./AlgorithmServer/SSN.png')
 
-    # img = cv2.imread('./AlgorithmServer/registcard_test.png', cv2.IMREAD_COLOR)
-    img = cv2.imread('./AlgorithmServer/tilted_test.png', cv2.IMREAD_COLOR)
+    img = cv2.imread('./AlgorithmServer/registcard_test.png', cv2.IMREAD_GRAYSCALE)
+    # img = cv2.imread('./AlgorithmServer/SSN.png', cv2.IMREAD_COLOR)
     
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)              # BRG로 인식하는 openCV -> RGB로 변환해 줘야 함
 
@@ -44,6 +54,8 @@ class EasyOcr():
             br = (int(br[0]), int(br[1]))
             bl = (int(bl[0]), int(bl[1]))
 
+            if Algorithm.is_idcard(text):
+                EasyOcr.coordinate.update({"category": "idcard"})
             if Algorithm.ssn_check(text):
                 EasyOcr.counter += 1
                 EasyOcr.coordinate.update({"vertices {}".format(EasyOcr.counter): [{"x": tl[0], "y":tl[1]}, {
@@ -62,11 +74,12 @@ class EasyOcr():
 # 실행 영역
 if __name__ == "__main__":
     EasyOcr.extract_json(EasyOcr.get_coordinate(EasyOcr.result))
-
+    # plt.imshow(PreProcessing.noise_open('./AlgorithmServer/registcard_test.png'))
+    
     # EasyOcr.img.save("./registcard_test_masked.png")                       # 마스킹 작업된 이미지 파일 저장
     # EasyOcr.img.save("./SSN_masked.png")                                   # 마스킹 작업된 이미지 파일 저장
-    plt.imshow(EasyOcr.img)                                                # 마스킹 작업된 이미지 표출
-    plt.show()
+    # plt.imshow(EasyOcr.img)                                                # 마스킹 작업된 이미지 표출
+    # plt.show()
 
 
 '''

@@ -22,10 +22,10 @@ class ClovaOcr():
     # 앱 보안 키(네이버 클로바 키 or 아마존 키)
     secret_key = "dHBtZ0xwQmNuRW5XUWhsS1VDdVJRU0RnREtUVU5BY3c="
 
-    # input_file = './AlgorithmServer/registcard_test.png'
-    input_file = './AlgorithmServer/SSN.png'
-    # output_file = './AlgorithmServer/clova_single_output.json'
-    output_file = './AlgorithmServer/clova_multi_output.json'
+    input_file = './AlgorithmServer/registcard_test.png'
+    # input_file = './AlgorithmServer/SSN.png'
+    output_file = './AlgorithmServer/clova_single_output.json'
+    # output_file = './AlgorithmServer/clova_multi_output.json'
 
     request_json = {
         'images': [
@@ -60,6 +60,9 @@ class ActOnServer():
     def check_privacy(res):
         for images in res["images"]:
             for key in images["fields"]:
+                if (Algorithm.is_idcard(key["inferText"])):
+                    ClovaOcr.coordinate.update({"category": key["inferText"]})
+
                 if (Algorithm.ssn_check(key["inferText"])):
                     ClovaOcr.counter += 1
                     ClovaOcr.coordinate.update({"{}.".format(ClovaOcr.counter): key["boundingPoly"]})
@@ -68,7 +71,7 @@ class ActOnServer():
     # 최종 반환 .json 파일 추출 함수
     def extract_coordinate_json(coordinate):
         # with open('./AlgorithmServer/clovarocr_coordinate.json', 'w', encoding='utf-8') as outfile:
-        with open('./AlgorithmServer/clovaocr_multi_coordinate.json', 'w', encoding='utf-8') as outfile:
+        with open('./AlgorithmServer/clovaocr_tilted_coordinate.json', 'w', encoding='utf-8') as outfile:
             json.dump(coordinate, outfile, indent=4, ensure_ascii=False)
 
 
