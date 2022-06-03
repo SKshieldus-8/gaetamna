@@ -55,7 +55,7 @@ class EasyOcr():
             bl = (int(bl[0]), int(bl[1]))
 
             if Algorithm.is_idcard(text):
-                EasyOcr.coordinate.update({"category": "idcard"})
+                EasyOcr.coordinate.update({"tag": "idcard"})
             if Algorithm.ssn_check(text):
                 EasyOcr.counter += 1
                 EasyOcr.coordinate.update({"vertices {}".format(EasyOcr.counter): [{"x": tl[0], "y":tl[1]}, {
