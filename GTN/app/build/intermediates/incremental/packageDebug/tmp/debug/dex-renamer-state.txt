@@ -1,4 +1,4 @@
-#Thu Jun 02 17:25:57 KST 2022
+#Fri Jun 03 23:03:59 KST 2022
 base.2=C\:\\Users\\Lydia\\Downloads\\2022\\2022_05\\Project\\GTN\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
 path.2=14/classes.dex
 base.1=C\:\\Users\\Lydia\\Downloads\\2022\\2022_05\\Project\\GTN\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex

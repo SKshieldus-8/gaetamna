@@ -1,158 +1,162 @@
 [
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img12.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img12.jpg"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\layout_mainpage_tab4.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\layout\\mainpage_tab4.xml"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img06.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img06.jpg"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img03.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img03.jpg"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img08.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img08.jpg"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.gtn.app-main-28:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img05.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img05.jpg"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "com.example.gtn.app-main-28:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\layout_mainpage_tab2.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\layout\\mainpage_tab2.xml"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img10.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img10.jpg"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img11.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img11.jpg"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img04.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img04.jpg"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/layout_testgridview.xml.flat",
-        "source": "com.example.gtn.app-main-28:/layout/testgridview.xml"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img03.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img03.jpg"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\xml\\backup_rules.xml"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.example.gtn.app-main-28:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\mipmap-mdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/layout_mainpage_tab1.xml.flat",
-        "source": "com.example.gtn.app-main-28:/layout/mainpage_tab1.xml"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img08.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img08.jpg"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/xml_backup_rules.xml.flat",
-        "source": "com.example.gtn.app-main-28:/xml/backup_rules.xml"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img06.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img06.jpg"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.example.gtn.app-main-28:/drawable/ic_launcher_background.xml"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img01.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img01.jpg"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.gtn.app-main-28:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.gtn.app-main-28:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img14.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img14.jpg"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.gtn.app-main-28:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable\\ic_launcher_background.xml"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img14.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img14.jpg"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "com.example.gtn.app-main-28:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\mipmap-xxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "com.example.gtn.app-main-28:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\layout_loginpage.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\layout\\loginpage.xml"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img01.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img01.jpg"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/layout_mainpage_tab3.xml.flat",
-        "source": "com.example.gtn.app-main-28:/layout/mainpage_tab3.xml"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img04.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img04.jpg"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img07.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img07.jpg"
-    },
-    {
-        "merged": "com.example.gtn.app-merged_res-26:/layout_mainpage_tab4.xml.flat",
-        "source": "com.example.gtn.app-main-28:/layout/mainpage_tab4.xml"
-    },
-    {
-        "merged": "com.example.gtn.app-merged_res-26:/layout_loginpage.xml.flat",
-        "source": "com.example.gtn.app-main-28:/layout/loginpage.xml"
-    },
-    {
-        "merged": "com.example.gtn.app-merged_res-26:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.gtn.app-main-28:/mipmap-hdpi/ic_launcher_round.webp"
-    },
-    {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img13.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img13.jpg"
-    },
-    {
-        "merged": "com.example.gtn.app-merged_res-26:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.example.gtn.app-main-28:/mipmap-anydpi-v26/ic_launcher.xml"
-    },
-    {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img09.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img09.jpg"
-    },
-    {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img05.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img05.jpg"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\xml\\data_extraction_rules.xml"
     },
     {
         "merged": "com.example.gtn.app-merged_res-26:/layout_viewpage.xml.flat",
         "source": "com.example.gtn.app-main-28:/layout/viewpage.xml"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img11.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img11.jpg"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\layout_viewpage.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\layout\\viewpage.xml"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img02.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img02.jpg"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.gtn.app-main-28:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img12.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img12.jpg"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-v24_img15.jpg.flat",
-        "source": "com.example.gtn.app-main-28:/drawable-v24/img15.jpg"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\layout_mainpage_tab3.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\layout\\mainpage_tab3.xml"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/layout_temppage.xml.flat",
-        "source": "com.example.gtn.app-main-28:/layout/temppage.xml"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img07.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img07.jpg"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/xml_data_extraction_rules.xml.flat",
-        "source": "com.example.gtn.app-main-28:/xml/data_extraction_rules.xml"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-pngs-21:\\drawable-anydpi-v24\\ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/layout_mainpage_tab2.xml.flat",
-        "source": "com.example.gtn.app-main-28:/layout/mainpage_tab2.xml"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
-        "source": "com.example.gtn.app-pngs-21:/drawable-anydpi-v24/ic_launcher_foreground.xml"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img13.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img13.jpg"
     },
     {
-        "merged": "com.example.gtn.app-merged_res-26:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.gtn.app-main-28:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img09.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img09.jpg"
+    },
+    {
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\layout_temppage.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\layout\\temppage.xml"
+    },
+    {
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img10.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img10.jpg"
+    },
+    {
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img15.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img15.jpg"
+    },
+    {
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\layout_mainpage_tab1.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\layout\\mainpage_tab1.xml"
+    },
+    {
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\layout_testgridview.xml.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\layout\\testgridview.xml"
+    },
+    {
+        "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img02.jpg.flat",
+        "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img02.jpg"
     }
 ]

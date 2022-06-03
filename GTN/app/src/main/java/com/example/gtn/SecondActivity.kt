@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import java.io.File
 
-
 @Suppress("deprecation")
 class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
     lateinit var tab1: ActionBar.Tab
@@ -70,7 +69,6 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
                 myTabFrag = myFrags[tab.position]
             }
         }
-
         ft?.replace(android.R.id.content, myTabFrag!!)
     }
 
@@ -79,10 +77,7 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
 
     class MyTabFragment : androidx.fragment.app.Fragment(){
         var tabName: String? = null
-
-        var curNum : Int = 0
         var imageFiles: Array<File>? = null
-        lateinit var imageFname: String
 
         override fun onCreate(savedInstanceState: Bundle?){
             super.onCreate(savedInstanceState)
@@ -103,18 +98,22 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             var cont = context
-            // 각 탭 별로 화면 내에서 처리할 이벤트 정의
-            // 해당하는 유형의 사진 출력
-            // 사진이 눌렸을 경우 실행할 이벤트를 함수로 만들어 재사용 할 것
+
             //
-            try {
-                imageFiles =
-                    File(Environment.getExternalStorageDirectory().absolutePath + "/DCIM").listFiles()
-                //이게 왜 Null일까,,,
-            }catch (e: Exception){
-                Log.e("error", "$e")
-            }
-            //imageFname = imageFiles!![0].toString()
+            imageFiles = File(Environment.getExternalStorageDirectory().absolutePath + "/DCIM/Camera").listFiles()
+            //Log.d("imageFiles", "${Environment.getExternalStorageDirectory().absolutePath}/DCIM/Camera")
+            // 문제점: line 105는 /DCIM/Camera에 있는 모든 파일을 가져옴
+            //        개인정보가 존재하는 사진만 가져오도록 바꾸기
+            //        internal storage 내 파일에 개인정보가 존재하는 사진 이름을 저장해두기?
+            //        다른 방법?
+
+            // 이미지 유형별 분류
+            //      1차원 Array<Int>로 유형1, 2, 3 매크로 정의해 사용하면 될 듯
+            // -> putIntent로 intArray 전송 가능
+
+            // 이미지 탐색 완료 여부
+            //      ??? 전체 파일에 대해서 해야하는 것 아닌가. .. ?
+
 
             if(tabName === "전체") {
                 var gv = view.findViewById<View>(R.id.tab1_gridView) as GridView
@@ -123,14 +122,8 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
 
                 // 해당 이미지 넘겨주기
                 gv.setOnItemClickListener { adapterView, view, position, id ->
-
                     var intent = Intent(cont, ThirdActivity::class.java)
-                    //var item = gAdapter.getItem(position) as Array<Int>
-                    //var itemId = gAdapter.getItemId(position)
-
-                    //intent.putExtra("arrayImage", item)
-                    //intent.putExtra("Num", position) // 숫자
-                    //intent.putExtra("itemId", itemId.toInt())
+                    intent.putExtra("Num", position) // 숫자
                     startActivity(intent)
                 }
             }
@@ -140,7 +133,6 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
                 var gv = view.findViewById<View>(R.id.tab2_gridView) as GridView
                 var gAdapter = MyGridAdapter(context = cont, imageFiles!!)
                 gv.adapter = gAdapter
-
             }
 
             if(tabName === "통장사본") {
@@ -159,32 +151,45 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // 데이터가 넘어왔을 경우
+        // 파일을 개인정보파일 리스트에서 제거
+        if(data != null){
+
+        }
+    }
+
     class MyGridAdapter(var context: Context?, images: Array<File>?) : BaseAdapter() {
-        var imageFname = images?.get(0)?.toString()
+        //var imageFname = images?.get(0)?.toString()
+        val imageFile = images
+        var imageId = 0
 
         override fun getCount(): Int {
-            return 0
+            return imageFile!!.size
         }
 
         override fun getItem(p0: Int): Any {
-            return 0
+            return imageFile!![p0].name
         }
 
         override fun getItemId(p0: Int): Long {
-            return 0
+            return imageId.toLong()
         }
 
         override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
             var imageview = ImageView(context)
             imageview.layoutParams = ViewGroup.LayoutParams(350, 400)
-            imageview.scaleType = ImageView.ScaleType.FIT_CENTER
+            imageview.scaleType = ImageView.ScaleType.CENTER_CROP
             imageview.setPadding(5, 5, 5, 5)
 
             //imageview.setImageResource(imageId[p0])
-            //imageview.setImageURI()
 
-            var bitmap = BitmapFactory.decodeFile(imageFname)
+            var bitmap = BitmapFactory.decodeFile(imageFile!![p0].toString())
             imageview.setImageBitmap(bitmap)
+
+            imageId = p0
 
             return imageview
         }

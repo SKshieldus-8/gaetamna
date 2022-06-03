@@ -23,6 +23,12 @@ class MainActivity : AppCompatActivity(){
 
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), Context.MODE_PRIVATE)
 
+        // 백그라운드 서비스에 대한 내용 작성:
+        //      백그라운드 서비스에서 갤러리에 이미지 추가 혹은 사진 촬영 이벤트가 발생한 경우
+        //      이미지를 서버로 보내고
+        //      서버에서 받은 파일을 분석해
+        //      마스킹 처리, 암호화 및 메타데이터에 저장
+
         btnLogin.setOnClickListener {
             var password = edittext_password.text.toString()
             if(password == "password"){
