@@ -39,6 +39,10 @@ class EasyOcr():
             tr = (int(tr[0]), int(tr[1]))
             br = (int(br[0]), int(br[1]))
             bl = (int(bl[0]), int(bl[1]))
+
+            if Algorithm.is_idcard(text):
+                EasyOcr.coordinate.update({"tag": "idcard"})
+
             if Algorithm.ssn_check(text):
                 EasyOcr.counter += 1
                 EasyOcr.coordinate.update({"vertices {}".format(EasyOcr.counter): [{"x": tl[0], "y":tl[1]}, {
@@ -78,11 +82,11 @@ def receive():
                 parsed = EasyOcr.reader.readtext(filename)
                 # basename = os.path.basename(filename)
                 os.remove(filename)
-                return json.dumps(EasyOcr.get_coordinate(parsed), ensure_ascii=False)
+                return json.dumps(EasyOcr.get_coordinate(parsed), ensure_ascii=False, sort_keys=True)
 
                 # with open(FILE_DIR + '/' + str(os.path.splitext(basename)[0])+'_easyocr_co.json', 'w', encoding='utf-8') as outfile:
                     # json.dump(EasyOcr.get_coordinate(parsed), outfile, indent=4, ensure_ascii=False)
-    finally:
+    except:
         return 'Nothing'
     '''
     <!doctype html>
