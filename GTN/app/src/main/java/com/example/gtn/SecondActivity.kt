@@ -12,10 +12,14 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.GridView
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import java.io.File
+import java.security.KeyStore
+
+var token: String? = null
 
 @Suppress("deprecation")
 class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
@@ -29,6 +33,9 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.temppage)
+
+        var intent = intent
+        token = intent.getStringExtra("token")
 
         var bar = this.supportActionBar
         bar!!.navigationMode = ActionBar.NAVIGATION_MODE_TABS
@@ -99,31 +106,52 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
             super.onViewCreated(view, savedInstanceState)
             var cont = context
 
-            //
+            // ~/DCIM/Camera 의 모든 이미지 파일 불러오기
             imageFiles = File(Environment.getExternalStorageDirectory().absolutePath + "/DCIM/Camera").listFiles()
             //Log.d("imageFiles", "${Environment.getExternalStorageDirectory().absolutePath}/DCIM/Camera")
-            // 문제점: line 105는 /DCIM/Camera에 있는 모든 파일을 가져옴
-            //        개인정보가 존재하는 사진만 가져오도록 바꾸기
-            //        internal storage 내 파일에 개인정보가 존재하는 사진 이름을 저장해두기?
-            //        다른 방법?
 
-            // 이미지 유형별 분류
-            //      1차원 Array<Int>로 유형1, 2, 3 매크로 정의해 사용하면 될 듯
-            // -> putIntent로 intArray 전송 가능
+            // DB1에 아무런 정보가 없으면 최초실행
+            // 서버와 통신하며 사진을 전부 훑는 작업 필요
+            // 0. DB1에 정보가 존재하는지 확인
+            // (DB1에 아무런 정보가 존재하지 않는다면)
+            // 1. 파일 배열 생성(개인정보가 전부 존재하는 배열, 해당 문서 타입별 배열*3)
+            // 2. imageFiles의 첫번째 파일부터 시작해 모든 파일을 API 통신
+            // 3. API 통신 결과
+            //      3-1. 개인정보 이미지가 존재하는 경우
+            //          3-1.1. DB1 갱신
+            //          3-1.2. DB2 갱신
+            //          3-1.3. 이미지 비식별화
+            //      3-2. 개인정보 이미지가 존재하지 않는 경우
+            //          3-2.1. 다음 이미지 탐색
 
-            // 이미지 탐색 완료 여부
-            //      ??? 전체 파일에 대해서 해야하는 것 아닌가. .. ?
+            // 새로고침 버튼과 백그라운드 버튼을 넣은 메뉴버튼 만들기
+
+            // 새로고침 버튼이 눌렸을 때
+            // 개인정보가 존재하는지 이미지 탐색
+            // DB 테이블 두 개 이용
+            // DB1: 개인정보가 존재하는 이미지 테이블
+            //      PK(imgname+time), imgname, imgtype, isinformation, time
+            // DB2: 탐색주기
+            //      Date(YYYY-MM-DD-HH-mm-SS)
+            // 1. 새로고침 버튼(메뉴에?) 클릭 시
+            // 2. DB2와 현재시각 비교
+            // 3. getExternalStorageDirectory() 이용해 이미지 전부 로드 -> imageFiles
+            // 4. DB1의 내용과 비교
+            //      4-1. DB1에 저장된 가장 마지막 사진 이후의 사진부터 서버에 전송
+            //      4-2. 3의 이미지 리스트 내 이미지들의 메타데이터를 확인, DB2의 가장 마지막 시간 이후에 촬영된 사진부터 서버에 전송
+            // 5. 개인정보가 포함된 사진이 존재하는 경우 비식별화 및 DB 업데이트
 
 
             if(tabName === "전체") {
                 var gv = view.findViewById<View>(R.id.tab1_gridView) as GridView
-                var gAdapter = MyGridAdapter(context = cont, imageFiles)
+                var gAdapter = MyGridAdapter(context = cont, imageFiles) // imageFiles 배열 변경 필요
                 gv.adapter = gAdapter
 
                 // 해당 이미지 넘겨주기
                 gv.setOnItemClickListener { adapterView, view, position, id ->
                     var intent = Intent(cont, ThirdActivity::class.java)
                     intent.putExtra("Num", position) // 숫자
+                    intent.putExtra("token", token)
                     startActivity(intent)
                 }
             }
@@ -131,25 +159,26 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
             if(tabName === "신분증") {
                 // 해당되는 이미지만 불러와야함
                 var gv = view.findViewById<View>(R.id.tab2_gridView) as GridView
-                var gAdapter = MyGridAdapter(context = cont, imageFiles!!)
+                var gAdapter = MyGridAdapter(context = cont, imageFiles) // imageFiles 배열 변경 필요
                 gv.adapter = gAdapter
             }
 
             if(tabName === "통장사본") {
                 // 해당되는 이미지만 불러와야함
                 var gv = view.findViewById<View>(R.id.tab3_gridView) as GridView
-                var gAdapter = MyGridAdapter(context = cont, imageFiles!!)
+                var gAdapter = MyGridAdapter(context = cont, imageFiles) // imageFiles 배열 변경 필요
                 gv.adapter = gAdapter
             }
 
             if(tabName === "증명서") {
                 // 해당되는 이미지만 불러와야함
                 var gv = view.findViewById<View>(R.id.tab4_gridView) as GridView
-                var gAdapter = MyGridAdapter(context = cont, imageFiles!!)
+                var gAdapter = MyGridAdapter(context = cont, imageFiles) // imageFiles 배열 변경 필요
                 gv.adapter = gAdapter
             }
         }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -159,10 +188,10 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
         if(data != null){
 
         }
+        Toast.makeText(this, "removed", Toast.LENGTH_SHORT).show()
     }
 
     class MyGridAdapter(var context: Context?, images: Array<File>?) : BaseAdapter() {
-        //var imageFname = images?.get(0)?.toString()
         val imageFile = images
         var imageId = 0
 

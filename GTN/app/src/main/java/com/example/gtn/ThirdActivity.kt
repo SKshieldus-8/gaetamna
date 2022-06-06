@@ -2,8 +2,10 @@ package com.example.gtn
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
@@ -36,11 +38,15 @@ class ThirdActivity : AppCompatActivity() {
         btnRemove = findViewById(R.id.ViewPage_btnRemove)
         btnNext = findViewById(R.id.ViewPage_btnNext)
 
-
         var intent = intent
         var imageNum = intent.getIntExtra("Num", -1) // -> number
+        var token = intent.getStringExtra("token")
 
-        imageFiles = File(Environment.getExternalStorageDirectory().absolutePath + "/DCIM/Camera").listFiles()
+        var filePath = Environment.getExternalStorageDirectory().absolutePath + "/DCIM/Camera"
+        imageFiles = File(filePath).listFiles()
+
+        var imagePath = filePath + "/" + imageFiles!![imageNum].name
+        //Log.d("log", "imagePath: $imagePath")
 
         // Set ImageView
         imageView.scaleType = ImageView.ScaleType.FIT_CENTER
@@ -55,11 +61,15 @@ class ThirdActivity : AppCompatActivity() {
         // 마스킹 해제해서 화면에 출력하기
         switch.setOnClickListener {
             if(switch.isChecked){
-                // 스위치를 켠 경우 암호화
+                // 스위치를 켠 경우 비식별화
+                // 해당 메소드 호출
                 Toast.makeText(this, "switch is on", Toast.LENGTH_SHORT).show()
             }
             else{
-                // 스위치를 끈 경우 복호화
+                // 스위치를 끈 경우 비식별처리 해제
+                // 해당 메소드 호출
+                Toast.makeText(this, "switch is off", Toast.LENGTH_SHORT).show()
+
             }
         }
 
@@ -67,6 +77,7 @@ class ThirdActivity : AppCompatActivity() {
             if(imageNum == 0) imageNum = imageFiles!!.size - 1
             imageView.scaleType = ImageView.ScaleType.FIT_CENTER
             bitmap = BitmapFactory.decodeFile(imageFiles!![--imageNum].toString())
+            viewName.text = imageFiles!![imageNum].name
             imageView.setImageBitmap(bitmap)
         }
 
@@ -84,7 +95,7 @@ class ThirdActivity : AppCompatActivity() {
 
         // When remove button clicked
         btnRemove.setOnClickListener {
-            // 파일을 개인정보파일 리스트에서 제거
+            // 파일을 개인정보파일 DB에서 제거
             // setResult를 통해 제거된 사진파일 이름 혹은 imageNum을 SecondActivity로 전송
             finish() // 인텐트(ThirdActivity) 종료
         }
@@ -93,6 +104,7 @@ class ThirdActivity : AppCompatActivity() {
             if(imageNum == (imageFiles!!.size - 1)) imageNum = 0
             imageView.scaleType = ImageView.ScaleType.FIT_CENTER
             bitmap = BitmapFactory.decodeFile(imageFiles!![++imageNum].toString())
+            viewName.text = imageFiles!![imageNum].name
             imageView.setImageBitmap(bitmap)
         }
     }
