@@ -1,27 +1,45 @@
-import os
+import re
 import hashlib
-from flask import Flask, json, jsonify, request, flash, redirect, make_response
+from flask import Flask, json, jsonify, request, make_response
 import requests
 import easyocr
 from flask_session import Session
-from algorithm import Algorithm                 # 개인정보 탐지 알고리즘 관련
+# from algorithm import Algorithm                 # 개인정보 탐지 알고리즘 관련
 
 
-# 임시 DB
 ####################################################################
+# 임시 DB
 class GtnServer():
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # 허용 파일 확장자
-    id = None               # BillyMin
-    pw = None               # test123!
-    salt = None             # secret
-    # hash = hashlib.sha256(str(입력받은 pw + salt).encode('utf-8')).hexdigest()
-    access_token = None     # PyJWT 사용          
-    decry_key = None        # asdf(temp)
+    user_id = "BillyMin"                # BillyMin
+    pw = "test1234!"                    # test123!
+    salt = None                         # secret
+    # hash = hashlib.sha256(str(pw + salt).encode('utf-8')).hexdigest()
+    access_token = "ToKeN"              # PyJWT 사용          
+    decry_key = None                    # asdf(temp)
 
     # 파일 확장자 검증 함수
     def allowed_file(filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in GtnServer.ALLOWED_EXTENSIONS
 ####################################################################
+
+# 개인정보 인식 Algorithm 관련
+class Algorithm():
+    # 주민등록증 판단
+    def is_idcard(input):
+        if input == "주민등록증":
+            return True
+        else:
+            return False
+    
+    # 주민번호 정규식 판단
+    def ssn_check(input):
+        ssn = re.compile("^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$")
+
+        if ssn.match(input):
+            return True
+        else:
+            return False
 
 # easyOCR 관련
 class EasyOcr():
@@ -50,8 +68,8 @@ class EasyOcr():
                                           "x": tr[0], "y":tr[1]}, {"x": br[0], "y":br[1]}, {"x": bl[0], "y":bl[1]}]})
         return EasyOcr.coordinate
 
-# app 구성 영역
 ####################################################################
+# app 구성 영역
 app = Flask(__name__)
 
 # test API
@@ -70,31 +88,32 @@ def test():
 # Login API
 @app.route('/login', methods=['POST'])
 def login_auth():     # 임시
-    pass
-    # auth_data = request._contents
-    # if auth_data.id == user_id and auth_data.pw == password:
-        # return {
-            # "token": GtnServer.token
-        # }
-    # else:
-        # return {
-            # "msg": "계정 정보가 일치하지 않습니다."
-        # }
+    auth_data = request.get_json()
+    # print(auth_data)
+    if auth_data.get('id') == GtnServer.user_id and auth_data.get('pw') == GtnServer.pw:
+        return jsonify({
+            "token": GtnServer.access_token
+        })
+    else:
+        return jsonify({
+            "msg": "계정 정보가 일치하지 않습니다."
+        })
 
 # Decryption API
 @app.route('/decryption', methods=['POST', 'GET'])
 def get_key():
     pass
+    # auth_token = request.get_json()
     # 인증 성공 - 토큰 일치
-    # if token == GtnServer.token:
+    # if auth_token.get('access_token') == GtnServer.token:
         # return {
-            # 'key': GtnServer.decry_key
+            # 'decry_key': GtnServer.decry_key
         # }
     # 인증 실패 - 토큰 불일치
     # else:
         # return {
             # "msg": "권한이 없는 요청입니다."
-        # }
+        # }, 401
 
 # OCR API
 @app.route('/ocr', methods=['POST'])
@@ -102,11 +121,9 @@ def ocr():
     if request.method == 'POST':        
         # 파일이 첨부되어 있는가 확인
         if 'file' not in request.files:
-            return {
+            return jsonify({
                 'msg': '파일이 없습니다.'
-            }
-            # flash('Not allowed file')
-            # return redirect(request.url)
+            })
         
         file = request.files['file']
         
@@ -116,23 +133,28 @@ def ocr():
             contents = EasyOcr.get_coordinate(parsed)
             # 개인정보 탐지 내용이 없을 경우
             if contents == {}:
-                return {
+                return jsonify({
                     'msg': 'No Contents'
-                }
+                })
             # 개인정보 탐지 내용이 있을 경우
             else:
-                body = json.dumps(contents, ensure_ascii=False, sort_keys=True)
-                return {
-                    'data': body
-                }
+                return jsonify(contents)
+                # return json.dumps(contents, ensure_ascii=False, sort_keys=True)
+                # body = json.dumps(contents, ensure_ascii=False, sort_keys=True)
+                # return {
+                    # 'data': body
+                # }
+                # return body
         # 파일 형식이 허용되지 않을 경우
         else:
-            return {
+            return jsonify({
                 'msg': '허용되지 않는 파일 형식입니다.'
-            }
+            }), 403
     # GET 방식 테스트용 임시
     else:
-        return 'Nothing'
+        return jsonify({
+            'msg': '허용되지 않은 접근입니다.'
+        }), 403
 ####################################################################
 
 # 서버 구동 영역
