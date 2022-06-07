@@ -92,7 +92,7 @@ def login_auth():     # 임시
     # print(auth_data)
     if auth_data.get('id') == GtnServer.user_id and auth_data.get('pw') == GtnServer.pw:
         return jsonify({
-            "token": GtnServer.access_token
+            "access_token": GtnServer.access_token
         })
     else:
         return jsonify({
