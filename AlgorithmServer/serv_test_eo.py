@@ -1,5 +1,5 @@
 import os
-import re
+import hashlib
 from flask import Flask, json, jsonify, request, flash, redirect, make_response
 import requests
 import easyocr
@@ -11,10 +11,12 @@ from algorithm import Algorithm                 # 개인정보 탐지 알고리�
 ####################################################################
 class GtnServer():
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # 허용 파일 확장자
-    id = None
-    pw = None
-    token = None
-    decry_key = None
+    id = None               # BillyMin
+    pw = None               # test123!
+    salt = None             # secret
+    # hash = hashlib.sha256(str(입력받은 pw + salt).encode('utf-8')).hexdigest()
+    access_token = None     # PyJWT 사용          
+    decry_key = None        # asdf(temp)
 
     # 파일 확장자 검증 함수
     def allowed_file(filename):
@@ -59,7 +61,7 @@ def test():
         response = {
             "test": request.url,
             "result": 'OK'
-        } 
+        }
         res = make_response(jsonify(response), 200)
         return res
     else:
@@ -67,17 +69,17 @@ def test():
 
 # Login API
 @app.route('/login', methods=['POST'])
-def login_auth(id, pw):     # 임시
+def login_auth():     # 임시
+    pass
     # auth_data = request._contents
-    # if auth_data.id == GtnServer.id and auth_data.pw == GtnServer.pw:
-    if id == GtnServer.id and pw == GtnServer.pw:           # 임시 - DB 호출
-        return {
-            "token": GtnServer.token
-        }
-    else:
-        return {
-            "msg": "계정 정보가 일치하지 않습니다."
-        }
+    # if auth_data.id == user_id and auth_data.pw == password:
+        # return {
+            # "token": GtnServer.token
+        # }
+    # else:
+        # return {
+            # "msg": "계정 정보가 일치하지 않습니다."
+        # }
 
 # Decryption API
 @app.route('/decryption', methods=['POST', 'GET'])
@@ -95,7 +97,7 @@ def get_key():
         # }
 
 # OCR API
-@app.route('/ocr', methods=['GET', 'POST'])
+@app.route('/ocr', methods=['POST'])
 def ocr():
     if request.method == 'POST':        
         # 파일이 첨부되어 있는가 확인
@@ -120,10 +122,9 @@ def ocr():
             # 개인정보 탐지 내용이 있을 경우
             else:
                 body = json.dumps(contents, ensure_ascii=False, sort_keys=True)
-                return body
-                # return {
-                    # 'data': body
-                # }
+                return {
+                    'data': body
+                }
         # 파일 형식이 허용되지 않을 경우
         else:
             return {
@@ -132,15 +133,6 @@ def ocr():
     # GET 방식 테스트용 임시
     else:
         return 'Nothing'
-    '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
 ####################################################################
 
 # 서버 구동 영역
