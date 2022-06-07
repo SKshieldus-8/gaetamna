@@ -29,9 +29,12 @@ id Layout_Tab2
 id Layout_Tab3
 id Layout_Tab4
 id LoginPage_button
+id LoginPage_editTextTextId
 id LoginPage_editTextTextPassword
-id LoginPage_linearLayout
+id LoginPage_linearLayout1
+id LoginPage_linearLayout2
 id LoginPage_textView4
+id LoginPage_textViewId
 id ViewPage_btnEdit
 id ViewPage_btnNext
 id ViewPage_btnPre

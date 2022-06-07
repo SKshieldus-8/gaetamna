@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="40dp">
+
 
     <TextView
         android:layout_width="180dp"
@@ -14,23 +17,58 @@
         android:textColor="@color/black"
         android:textSize="34sp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/LoginPage_linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/LoginPage_linearLayout1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.471" />
+        app:layout_constraintVertical_bias="0.398" />
 
     <LinearLayout
-        android:id="@+id/LoginPage_linearLayout"
+        android:id="@+id/LoginPage_linearLayout1"
         android:layout_width="386dp"
         android:layout_height="128dp"
-        android:layout_marginBottom="116dp"
+        android:layout_marginBottom="204dp"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/LoginPage_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/LoginPage_textViewId"
+            android:layout_width="150dp"
+            android:layout_height="78dp"
+            android:layout_marginEnd="12dp"
+            android:gravity="center"
+            android:text="계정 아이디"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName2" />
+
+        <EditText
+            android:id="@+id/LoginPage_editTextTextId"
+            android:layout_width="220dp"
+            android:layout_height="95dp"
+            android:ems="10"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:text="id"
+            app:layout_constraintBottom_toTopOf="@+id/LoginPage_button" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LoginPage_linearLayout2"
+        android:layout_width="386dp"
+        android:layout_height="128dp"
+        android:layout_marginBottom="76dp"
         android:gravity="center"
-        app:layout_constraintHorizontal_bias="0.482"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/LoginPage_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
@@ -38,9 +76,9 @@
             android:layout_width="150dp"
             android:layout_height="78dp"
             android:layout_marginEnd="12dp"
+            android:gravity="center"
             android:text="계정 비밀번호"
             android:textAlignment="center"
-            android:gravity="center"
             android:textSize="24sp"
             app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName2" />
 
