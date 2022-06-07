@@ -2538,9 +2538,12 @@ id Layout_Tab2
 id Layout_Tab3
 id Layout_Tab4
 id LoginPage_button
+id LoginPage_editTextTextId
 id LoginPage_editTextTextPassword
-id LoginPage_linearLayout
+id LoginPage_linearLayout1
+id LoginPage_linearLayout2
 id LoginPage_textView4
+id LoginPage_textViewId
 id META
 id NO_DEBUG
 id SHIFT
