@@ -1,27 +1,45 @@
-import os
 import re
-from flask import Flask, flash, request, redirect, url_for, json, jsonify
-from werkzeug.utils import secure_filename
-# import requests
+import hashlib
+from flask import Flask, json, jsonify, request, make_response
+import requests
 import easyocr
 from flask_session import Session
-from algorithm import Algorithm                 # 개인정보 탐지 알고리즘 관련
+# from algorithm import Algorithm                 # 개인정보 탐지 알고리즘 관련
 
 
-# app 선언 영역
-app = Flask(__name__)
+####################################################################
+# 임시 DB
+class GtnServer():
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # 허용 파일 확장자
+    user_id = "BillyMin"                # BillyMin
+    pw = "test1234!"                    # test123!
+    salt = None                         # secret
+    # hash = hashlib.sha256(str(pw + salt).encode('utf-8')).hexdigest()
+    access_token = "ToKeN"              # PyJWT 사용          
+    decry_key = None                    # asdf(temp)
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # 허용 파일 확장자
-FILE_DIR = 'AlgorithmServer/files'                  # 파일 저장 경로
+    # 파일 확장자 검증 함수
+    def allowed_file(filename):
+        return '.' in filename and filename.rsplit('.', 1)[1].lower() in GtnServer.ALLOWED_EXTENSIONS
+####################################################################
 
-# 디렉토리가 없는 경우 디렉토리 생성
-if not os.path.exists(FILE_DIR):
-    os.makedirs(FILE_DIR)
+# 개인정보 인식 Algorithm 관련
+class Algorithm():
+    # 주민등록증 판단
+    def is_idcard(input):
+        if input == "주민등록증":
+            return True
+        else:
+            return False
+    
+    # 주민번호 정규식 판단
+    def ssn_check(input):
+        ssn = re.compile("^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$")
 
-# 파일 확장자 검증 함수
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+        if ssn.match(input):
+            return True
+        else:
+            return False
 
 # easyOCR 관련
 class EasyOcr():
@@ -31,7 +49,8 @@ class EasyOcr():
 
     # 인식 텍스트 좌표값 추출 함수
     def get_coordinate(result):
-        # bounding box 좌표, 텍스트, 검증(???) - KITTY, VOC 형식
+        # bounding box 좌표, 텍스트, 검증(1에 가까울수록 정확도 높음)
+        # KITTY, VOC 형식
         for (bbox, text, prob) in result:
             # top left, top right, bottom right, bottom left
             (tl, tr, br, bl) = bbox
@@ -39,60 +58,104 @@ class EasyOcr():
             tr = (int(tr[0]), int(tr[1]))
             br = (int(br[0]), int(br[1]))
             bl = (int(bl[0]), int(bl[1]))
+
+            if Algorithm.is_idcard(text):
+                EasyOcr.coordinate.update({"tag": "idcard"})
+
             if Algorithm.ssn_check(text):
                 EasyOcr.counter += 1
                 EasyOcr.coordinate.update({"vertices {}".format(EasyOcr.counter): [{"x": tl[0], "y":tl[1]}, {
                                           "x": tr[0], "y":tr[1]}, {"x": br[0], "y":br[1]}, {"x": bl[0], "y":bl[1]}]})
         return EasyOcr.coordinate
 
-    # 개인정보 인식 영역 좌표값 .json 파일 추출 함수
-    def extract_json(coordinate):
-        pass
-        # with open('./AlgorithmServer/easyocr_coordinate.json', 'w', encoding='utf-8') as outfile:
-        # with open('./AlgorithmServer/easyocr_multi_coordinate.json', 'w', encoding='utf-8') as outfile:
-            # json.dump(coordinate, outfile, indent=4, ensure_ascii=False)
-
-
+####################################################################
 # app 구성 영역
-@app.route('/', methods=['GET', 'POST'])
+app = Flask(__name__)
 
-# HTTP(S) 수신 함수
-def receive():
-    try:
-        if request.method == 'POST':
+# test API
+@app.route('/', methods=['GET'])
+def test():
+    if request.method == 'GET':
+        response = {
+            "test": request.url,
+            "result": 'OK'
+        }
+        res = make_response(jsonify(response), 200)
+        return res
+    else:
+        return 'None'
+
+# Login API
+@app.route('/login', methods=['POST'])
+def login_auth():     # 임시
+    auth_data = request.get_json()
+    # print(auth_data)
+    if auth_data.get('id') == GtnServer.user_id and auth_data.get('pw') == GtnServer.pw:
+        return jsonify({
+            "access_token": GtnServer.access_token
+        })
+    else:
+        return jsonify({
+            "msg": "계정 정보가 일치하지 않습니다."
+        })
+
+# Decryption API
+@app.route('/decryption', methods=['POST', 'GET'])
+def get_key():
+    pass
+    # auth_token = request.get_json()
+    # 인증 성공 - 토큰 일치
+    # if auth_token.get('access_token') == GtnServer.token:
+        # return {
+            # 'decry_key': GtnServer.decry_key
+        # }
+    # 인증 실패 - 토큰 불일치
+    # else:
+        # return {
+            # "msg": "권한이 없는 요청입니다."
+        # }, 401
+
+# OCR API
+@app.route('/ocr', methods=['POST'])
+def ocr():
+    if request.method == 'POST':        
+        # 파일이 첨부되어 있는가 확인
+        if 'file' not in request.files:
+            return jsonify({
+                'msg': '파일이 없습니다.'
+            })
+        
+        file = request.files['file']
+        
+        if file and GtnServer.allowed_file(file.filename):
             EasyOcr.counter = 0                         # 개인정보 갯수 카운터 초기화
-            # 파일이 첨부되어 있는가 확인
-            if 'file' not in request.files:
-                flash('Not allowed file')
-                return redirect(request.url)
-
-            file = request.files['file']
-            # 파일 이름 확인 - 예외처리  To-Do: Try-Except 구문 사용?
-            if file.filename == '':
-                flash("None file")
-                return redirect(request.url)
-
-            if file and allowed_file(file.filename):
-                filename = FILE_DIR + '/' + secure_filename(file.filename)
-                file.save(filename)
-                parsed = EasyOcr.reader.readtext(filename)
-                # basename = os.path.basename(filename)
-                os.remove(filename)
-                return json.dumps(EasyOcr.get_coordinate(parsed), ensure_ascii=False)
-
-                # with open(FILE_DIR + '/' + str(os.path.splitext(basename)[0])+'_easyocr_co.json', 'w', encoding='utf-8') as outfile:
-                    # json.dump(EasyOcr.get_coordinate(parsed), outfile, indent=4, ensure_ascii=False)
-    finally:
-        return 'Nothing'
-    '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
+            parsed = EasyOcr.reader.readtext(file.read())
+            contents = EasyOcr.get_coordinate(parsed)
+            # 개인정보 탐지 내용이 없을 경우
+            if contents == {}:
+                return jsonify({
+                    'msg': 'No Contents'
+                })
+            # 개인정보 탐지 내용이 있을 경우
+            else:
+                return jsonify(contents)
+                # return json.dumps(contents, ensure_ascii=False, sort_keys=True)
+                # body = json.dumps(contents, ensure_ascii=False, sort_keys=True)
+                # return {
+                    # 'data': body
+                # }
+                # return body
+        # 파일 형식이 허용되지 않을 경우
+        else:
+            return jsonify({
+                'msg': '허용되지 않는 파일 형식입니다.'
+            }), 403
+    # GET 방식 테스트용 임시
+    else:
+        return jsonify({
+            'msg': '허용되지 않은 접근입니다.'
+        }), 403
+####################################################################
 
 # 서버 구동 영역
 if __name__ == '__main__':
