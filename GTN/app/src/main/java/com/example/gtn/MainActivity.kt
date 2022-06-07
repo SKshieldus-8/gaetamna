@@ -33,9 +33,11 @@ class MainActivity : AppCompatActivity(){
             // 서버에 id와 password를 전송하는 코드 작성
             // 서버에서 json파일을 받아오는 코드 작성
 
-            var TorF: String? = null
+            var TorF: String? = "true"
             var token: String? = null
 
+
+            // 순서 수정하기
             // 비밀번호 유효성검사
             if (!Pattern.matches("^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-zA-Z]).{8,20}$", password)) {
                 Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()

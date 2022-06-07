@@ -76,9 +76,13 @@ ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\Androi
 	android:name
 		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:7:22-77
 uses-permission#android.permission.CAMERA
-ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:9:5-65
+ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:8:5-65
 	android:name
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:9:22-62
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:8:22-62
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:9:5-66
+	android:name
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:9:22-64
 application
 ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:11:5-33:19
 MERGED from [com.google.android.material:material:1.6.0] C:\Users\Lydia\.gradle\caches\transforms-3\79b6391953ca3004dc26c5d49dcfb02a\transformed\material-1.6.0\AndroidManifest.xml:24:5-20

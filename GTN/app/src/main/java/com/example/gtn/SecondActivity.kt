@@ -108,7 +108,7 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
 
             // ~/DCIM/Camera 의 모든 이미지 파일 불러오기
             imageFiles = File(Environment.getExternalStorageDirectory().absolutePath + "/DCIM/Camera").listFiles()
-            //Log.d("imageFiles", "${Environment.getExternalStorageDirectory().absolutePath}/DCIM/Camera")
+            Log.d("imageFiles", "${Environment.getExternalStorageDirectory().absolutePath}/DCIM/Camera")
 
             // DB1에 아무런 정보가 없으면 최초실행
             // 서버와 통신하며 사진을 전부 훑는 작업 필요
