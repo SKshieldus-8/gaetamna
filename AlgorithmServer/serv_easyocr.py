@@ -26,7 +26,7 @@ class PreProcessing():
 class EasyOcr():
     # easyocr(인식 언어, gpu 사용 여부), 결과 정보 저장 변수
     reader = easyocr.Reader(['ko', 'en'], gpu=False)
-    result = reader.readtext('./AlgorithmServer/registcard_test.png')
+    result = reader.readtext('./AlgorithmServer/dl01.jpg')
     # result = reader.readtext('./AlgorithmServer/SSN.png')
 
     img = cv2.imread('./AlgorithmServer/registcard_test.png', cv2.IMREAD_GRAYSCALE)
@@ -40,11 +40,12 @@ class EasyOcr():
     draw = ImageDraw.Draw(img)
 
     # px = img.load()                                         # 이미지 픽셀값 저장용 변수
-    coordinate = {}                                         # 좌표값 저장용 사전
-    counter = 0                                             # 개인정보 갯수 카운팅 변수
+    coordinate = {}                                           # 데이터 저장 사전
+    jumin_counter = 0                                         # 개인정보(주민번호) 갯수 카운팅 변수
+    license_counter = 0                                       # 개인정보(면허번호) 갯수 카운팅 변수
 
     # 인식 텍스트 좌표값 추출 함수
-    def get_coordinate(result):
+    def get_coordinate(result):  
         # bounding box 좌표, 텍스트, 검증(1에 가까울수록 높음) - KITTY, VOC 형식
         for (bbox, text, prob) in result:
             # top left, top right, bottom right, bottom left
@@ -56,12 +57,24 @@ class EasyOcr():
 
             if Algorithm.is_idcard(text):
                 EasyOcr.coordinate.update({"tag": "idcard"})
-            if Algorithm.ssn_check(text):
-                EasyOcr.counter += 1
-                EasyOcr.coordinate.update({"vertices {}".format(EasyOcr.counter): [{"x": tl[0], "y":tl[1]}, {
+
+            if Algorithm.is_license(text):
+                EasyOcr.coordinate.update({"tag": "license"})
+
+            if Algorithm.is_registration(text):
+                EasyOcr.coordinate.update({"tag": "registration"})
+
+            if Algorithm.jumin_check(text):
+                EasyOcr.jumin_counter += 1
+                EasyOcr.coordinate.update({"jumin {}".format(EasyOcr.jumin_counter): [{"x": tl[0], "y":tl[1]}, {
                                           "x": tr[0], "y":tr[1]}, {"x": br[0], "y":br[1]}, {"x": bl[0], "y":bl[1]}]})
                 # EasyOcr.draw.rectangle((tl, br), outline="red")
                 # EasyOcr.draw.text((int(tl[0]), int(tl[1])), text, font=EasyOcr.font, fill="blue")
+        
+            if Algorithm.licensenum_check(text):
+                EasyOcr.license_counter += 1
+                EasyOcr.coordinate.update({"license {}".format(EasyOcr.license_counter): [{"x": tl[0], "y":tl[1]}, {"x": tr[0], "y":tr[1]}, {"x": br[0], "y":br[1]}, {"x": bl[0], "y":bl[1]}]})
+        
         return EasyOcr.coordinate
 
     # 개인정보 인식 영역 좌표값 .json 파일 추출 함수

@@ -4,7 +4,7 @@ from flask import Flask, json, jsonify, request, make_response
 import requests
 import easyocr
 from flask_session import Session
-# from algorithm import Algorithm                 # 개인정보 탐지 알고리즘 관련
+from algorithm import Algorithm                 # 개인정보 탐지 알고리즘 관련
 
 
 ####################################################################
@@ -23,29 +23,13 @@ class GtnServer():
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in GtnServer.ALLOWED_EXTENSIONS
 ####################################################################
 
-# 개인정보 인식 Algorithm 관련
-class Algorithm():
-    # 주민등록증 판단
-    def is_idcard(input):
-        if input == "주민등록증":
-            return True
-        else:
-            return False
-    
-    # 주민번호 정규식 판단
-    def ssn_check(input):
-        ssn = re.compile("^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$")
-
-        if ssn.match(input):
-            return True
-        else:
-            return False
-
 # easyOCR 관련
 class EasyOcr():
     reader = easyocr.Reader(['ko', 'en'], gpu=False)
     coordinate = {}                                         # 좌표값 저장용 사전
-    counter = 0                                             # 개인정보 갯수 카운팅 변수
+    jumin_counter = 0                                       # 개인정보(주민번호) 갯수 카운팅 변수
+    license_counter = 0                                     # 개인정보(면허번호) 갯수 카운팅 변수
+    tag = [0,0,0]                                           # 개인정보 유형 확인용 리스트
 
     # 인식 텍스트 좌표값 추출 함수
     def get_coordinate(result):
@@ -59,13 +43,26 @@ class EasyOcr():
             br = (int(br[0]), int(br[1]))
             bl = (int(bl[0]), int(bl[1]))
 
+            
             if Algorithm.is_idcard(text):
                 EasyOcr.coordinate.update({"tag": "idcard"})
 
-            if Algorithm.ssn_check(text):
-                EasyOcr.counter += 1
-                EasyOcr.coordinate.update({"vertices {}".format(EasyOcr.counter): [{"x": tl[0], "y":tl[1]}, {
+            if Algorithm.is_license(text):
+                EasyOcr.coordinate.update({"tag": "license"})
+
+            if Algorithm.is_registration(text):
+                EasyOcr.coordinate.update({"tag": "registration"})
+
+            if Algorithm.jumin_check(text):
+                EasyOcr.jumin_counter += 1
+                EasyOcr.coordinate.update({"jumin {}".format(EasyOcr.jumin_counter): [{"x": tl[0], "y":tl[1]}, {
                                           "x": tr[0], "y":tr[1]}, {"x": br[0], "y":br[1]}, {"x": bl[0], "y":bl[1]}]})
+
+            if Algorithm.licensenum_check(text):
+                EasyOcr.license_counter += 1
+                EasyOcr.coordinate.update({"license {}".format(EasyOcr.license_counter): [{"x": tl[0], "y":tl[1]}, {
+                                          "x": tr[0], "y":tr[1]}, {"x": br[0], "y":br[1]}, {"x": bl[0], "y":bl[1]}]})
+
         return EasyOcr.coordinate
 
 ####################################################################
@@ -103,17 +100,17 @@ def login_auth():     # 임시
 @app.route('/decryption', methods=['POST', 'GET'])
 def get_key():
     pass
-    # auth_token = request.get_json()
+    auth_token = request.get_json()
     # 인증 성공 - 토큰 일치
-    # if auth_token.get('access_token') == GtnServer.token:
-        # return {
-            # 'decry_key': GtnServer.decry_key
-        # }
+    if auth_token.get('access_token') == GtnServer.token:
+        return jsonify({
+            'decry_key': GtnServer.decry_key
+        })
     # 인증 실패 - 토큰 불일치
-    # else:
-        # return {
-            # "msg": "권한이 없는 요청입니다."
-        # }, 401
+    else:
+        return {
+            "msg": "권한이 없는 요청입니다."
+        }, 401
 
 # OCR API
 @app.route('/ocr', methods=['POST'])
@@ -128,7 +125,12 @@ def ocr():
         file = request.files['file']
         
         if file and GtnServer.allowed_file(file.filename):
-            EasyOcr.counter = 0                         # 개인정보 갯수 카운터 초기화
+            # 변수 리셋
+            EasyOcr.coordinate = {}
+            EasyOcr.jumin_counter = 0
+            EasyOcr.license_counter = 0
+            EasyOcr.tag = [0, 0]
+
             parsed = EasyOcr.reader.readtext(file.read())
             contents = EasyOcr.get_coordinate(parsed)
             # 개인정보 탐지 내용이 없을 경우
