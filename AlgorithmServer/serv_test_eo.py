@@ -26,10 +26,13 @@ class GtnServer():
 # easyOCR 관련
 class EasyOcr():
     reader = easyocr.Reader(['ko', 'en'], gpu=False)
-    coordinate = {}                                         # 좌표값 저장용 사전
+    coordinate = dict()                                     # 데이터 저장 사전
+    # 검증 리스트
+    verif_idcard = list(0 for i in range(0, 5))
+    verif_license = list(0 for i in range(0, 5))
+    verif_regist = list(0 for i in range(0, 9))
     jumin_counter = 0                                       # 개인정보(주민번호) 갯수 카운팅 변수
     license_counter = 0                                     # 개인정보(면허번호) 갯수 카운팅 변수
-    tag = [0,0,0]                                           # 개인정보 유형 확인용 리스트
 
     # 인식 텍스트 좌표값 추출 함수
     def get_coordinate(result):
@@ -43,14 +46,13 @@ class EasyOcr():
             br = (int(br[0]), int(br[1]))
             bl = (int(bl[0]), int(bl[1]))
 
-            
-            if Algorithm.is_idcard(text):
+            if Algorithm.is_idcard(text, EasyOcr.verif_idcard):
                 EasyOcr.coordinate.update({"tag": "idcard"})
 
-            if Algorithm.is_license(text):
+            if Algorithm.is_license(text, EasyOcr.verif_license):
                 EasyOcr.coordinate.update({"tag": "license"})
 
-            if Algorithm.is_registration(text):
+            if Algorithm.is_registration(text, EasyOcr.verif_regist):
                 EasyOcr.coordinate.update({"tag": "registration"})
 
             if Algorithm.jumin_check(text):
@@ -102,7 +104,7 @@ def get_key():
     pass
     auth_token = request.get_json()
     # 인증 성공 - 토큰 일치
-    if auth_token.get('access_token') == GtnServer.token:
+    if auth_token.get('access_token') == GtnServer.access_token:
         return jsonify({
             'decry_key': GtnServer.decry_key
         })
@@ -127,9 +129,11 @@ def ocr():
         if file and GtnServer.allowed_file(file.filename):
             # 변수 리셋
             EasyOcr.coordinate = {}
+            EasyOcr.verif_idcard = list(0 for i in range(0, 5))
+            EasyOcr.verif_license = list(0 for i in range(0, 5))
+            EasyOcr.verif_regist = list(0 for i in range(0, 9))
             EasyOcr.jumin_counter = 0
             EasyOcr.license_counter = 0
-            EasyOcr.tag = [0, 0]
 
             parsed = EasyOcr.reader.readtext(file.read())
             contents = EasyOcr.get_coordinate(parsed)

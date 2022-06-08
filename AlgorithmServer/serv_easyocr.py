@@ -27,7 +27,7 @@ class EasyOcr():
     # easyocr(인식 언어, gpu 사용 여부), 결과 정보 저장 변수
     reader = easyocr.Reader(['ko', 'en'], gpu=False)
     result = reader.readtext('./AlgorithmServer/dl01.jpg')
-    # result = reader.readtext('./AlgorithmServer/SSN.png')
+    # result = reader.readtext('./AlgorithmServer/registcard_test.png')
 
     img = cv2.imread('./AlgorithmServer/registcard_test.png', cv2.IMREAD_GRAYSCALE)
     # img = cv2.imread('./AlgorithmServer/SSN.png', cv2.IMREAD_COLOR)
@@ -40,12 +40,16 @@ class EasyOcr():
     draw = ImageDraw.Draw(img)
 
     # px = img.load()                                         # 이미지 픽셀값 저장용 변수
-    coordinate = {}                                           # 데이터 저장 사전
+    coordinate = dict()                                           # 데이터 저장 사전
+    verif_idcard = list(0 for i in range(0,5))                                      # 검증 리스트
+    verif_license = list(0 for i in range(0,5))
+    verif_regist = list(0 for i in range(0,9))
     jumin_counter = 0                                         # 개인정보(주민번호) 갯수 카운팅 변수
     license_counter = 0                                       # 개인정보(면허번호) 갯수 카운팅 변수
-
+    
     # 인식 텍스트 좌표값 추출 함수
-    def get_coordinate(result):  
+    def get_coordinate(result):
+        # print(result)
         # bounding box 좌표, 텍스트, 검증(1에 가까울수록 높음) - KITTY, VOC 형식
         for (bbox, text, prob) in result:
             # top left, top right, bottom right, bottom left
@@ -55,13 +59,13 @@ class EasyOcr():
             br = (int(br[0]), int(br[1]))
             bl = (int(bl[0]), int(bl[1]))
 
-            if Algorithm.is_idcard(text):
+            if Algorithm.is_idcard(text, EasyOcr.verif_idcard):
                 EasyOcr.coordinate.update({"tag": "idcard"})
 
-            if Algorithm.is_license(text):
+            if Algorithm.is_license(text, EasyOcr.verif_license):
                 EasyOcr.coordinate.update({"tag": "license"})
 
-            if Algorithm.is_registration(text):
+            if Algorithm.is_registration(text, EasyOcr.verif_regist):
                 EasyOcr.coordinate.update({"tag": "registration"})
 
             if Algorithm.jumin_check(text):

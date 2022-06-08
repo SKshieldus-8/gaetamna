@@ -1,72 +1,78 @@
 import re
 
-class Algorithm():
-    jumin_cond = [0,0,0,0,0]
-    license_cond = [0,0,0,0,0]
-    regist_cond = [0,0,0,0,0,0]
+class Algorithm():    
+    # 텍스트 기반 - 쪼개진 단어를 조합하여 개인정보 유형 파악
     
-    # 단어 쪼개서 조합하기
-    def is_idcard(input):
-        Algorithm.jumin_cond = [0, 0, 0, 0, 0]
-        word = list(input)
+    # 주민등록증
+    def is_idcard(text, verif):
+        word = list(text)
         for i in word:
+            if verif == [1,1,1,1,1]:
+                break;
             if i == "주":
-                Algorithm.jumin_cond[0] = 1
+                verif[0] = 1
             if i == "민":
-                Algorithm.jumin_cond[1] = 1
+                verif[1] = 1
             if i == "등":
-                Algorithm.jumin_cond[2] = 1
+                verif[2] = 1
             if i == "록":
-                Algorithm.jumin_cond[3] = 1
+                verif[3] = 1
             if i == "증":
-                Algorithm.jumin_cond[4] = 1
-            if Algorithm.jumin_cond == [1, 1, 1, 1, 1]:
-                break
-        if Algorithm.jumin_cond == [1, 1, 1, 1, 1]:
+                verif[4] = 1
+
+        if verif == [1,1,1,1,1]:
             return True
         else:
             return False
 
-    def is_license(input):
-        Algorithm.license_cond = [0, 0, 0, 0, 0]
-        word = list(input)
+    # 운전면허증
+    def is_license(text, verif):
+        word = list(text)
         for i in word:
+            if verif == [1,1,1,1,1]:
+                break;
             if i == "운":
-                Algorithm.license_cond[0] = 1
+                verif[0] = 1
             if i == "전":
-                Algorithm.license_cond[1] = 1
+                verif[1] = 1
             if i == "면":
-                Algorithm.license_cond[2] = 1
+                verif[2] = 1
             if i == "허":
-                Algorithm.license_cond[3] = 1
+                verif[3] = 1
             if i == "증":
-                Algorithm.license_cond[4] = 1
-            if Algorithm.license_cond == [1, 1, 1, 1, 1]:
-                break
-        if Algorithm.license_cond == [1, 1, 1, 1, 1]:
+                verif[4] = 1
+
+        if verif == [1,1,1,1,1]:
             return True
         else:
             return False
 
-    def is_registration(input):
-        Algorithm.regist_cond = [0, 0, 0, 0, 0, 0]
-        word = list(input)
+    # 주민등록등본
+    def is_registration(text, verif):
+        word = list(text)
         for i in word:
+            if verif == [1,1,1,1,1,1,1,1,1]:
+                break;
             if i == "주":
-                Algorithm.regist_cond[0] = 1
+                verif[0] = 1
             if i == "민":
-                Algorithm.regist_cond[1] = 1
+                verif[1] = 1
             if i == "등":
-                Algorithm.regist_cond[2] = 1
+                verif[2] = 1
             if i == "록":
-                Algorithm.regist_cond[3] = 1
+                verif[3] = 1
             if i == "표":
-                Algorithm.regist_cond[4] = 1
+                verif[4] = 1
             if i == "본":
-                Algorithm.regist_cond[5] = 1
-            if Algorithm.regist_cond == [1, 1, 1, 1, 1, 1]:
-                break
-        if Algorithm.regist_cond == [1, 1, 1, 1, 1, 1]:
+                verif[5] = 1
+            if i == "세":
+                verif[6] = 1
+            if i == "대":
+                verif[7] = 1
+            if i == "주":
+                verif[8] = 1
+
+        if verif == [1,1,1,1,1,1,1,1,1]:
             return True
         else:
             return False
