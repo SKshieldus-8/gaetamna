@@ -30,13 +30,11 @@ class EasyOcr():
 
             if Algorithm.jumin_check(text):
                 cnt1 += 1
-                dict1.update({"jumin {}".format(cnt1): [{'x': tl[0], 'y':tl[1]}, {
-                    'x': tr[0], 'y':tr[1]}, {'x': br[0], 'y':br[1]}, {'x': bl[0], 'y':bl[1]}]})
+                dict1.update({"jumin {}".format(cnt1): [{'x': tl[0], 'y':tl[1]}, {'x': br[0], 'y':br[1]}]})
 
             if Algorithm.licensenum_check(text):
                 cnt2 += 1
-                dict1.update({"license {}".format(cnt2): [{'x': tl[0], 'y':tl[1]}, {
-                    'x': tr[0], 'y':tr[1]}, {'x': br[0], 'y':br[1]}, {'x': bl[0], 'y':bl[1]}]})
+                dict1.update({"license {}".format(cnt2): [{'x': tl[0], 'y':tl[1]}, {'x': br[0], 'y':br[1]}]})
 
         return dict1
 
