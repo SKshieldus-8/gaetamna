@@ -16,7 +16,7 @@ class GtnServer():
     salt = None                         # secret
     # hash = hashlib.sha256(str(pw + salt).encode('utf-8')).hexdigest()
     access_token = "ToKeN"              # PyJWT 사용          
-    decry_key = None                    # asdf(temp)
+    decry_key = "Key"                    # asdf(temp)
 
     # 파일 확장자 검증 함수
     def allowed_file(filename):
@@ -26,16 +26,16 @@ class GtnServer():
 # easyOCR 관련
 class EasyOcr():
     reader = easyocr.Reader(['ko', 'en'], gpu=False)
-    coordinate = dict()                                     # 데이터 저장 사전
+    # coordinate = dict()                                     # 데이터 저장 사전
     # 검증 리스트
-    verif_idcard = list(0 for i in range(0, 5))
-    verif_license = list(0 for i in range(0, 5))
-    verif_regist = list(0 for i in range(0, 9))
-    jumin_counter = 0                                       # 개인정보(주민번호) 갯수 카운팅 변수
-    license_counter = 0                                     # 개인정보(면허번호) 갯수 카운팅 변수
+    # verif_idcard = list(0 for i in range(0, 5))
+    # verif_license = list(0 for i in range(0, 5))
+    # verif_regist = list(0 for i in range(0, 9))
+    # jumin_cnt = 0                                       # 개인정보(주민번호) 갯수 카운팅 변수
+    # license_cnt = 0                                     # 개인정보(면허번호) 갯수 카운팅 변수
 
     # 인식 텍스트 좌표값 추출 함수
-    def get_coordinate(result):
+    def get_coordinate(result, dict1, list1, list2, list3, cnt1, cnt2):
         # bounding box 좌표, 텍스트, 검증(1에 가까울수록 정확도 높음)
         # KITTY, VOC 형식
         for (bbox, text, prob) in result:
@@ -46,26 +46,32 @@ class EasyOcr():
             br = (int(br[0]), int(br[1]))
             bl = (int(bl[0]), int(bl[1]))
 
-            if Algorithm.is_idcard(text, EasyOcr.verif_idcard):
-                EasyOcr.coordinate.update({"tag": "idcard"})
+            if Algorithm.is_idcard(text, list1):
+                dict1.update({"tag": "idcard"})
+                # EasyOcr.coordinate.update({"tag": "idcard"})
 
-            if Algorithm.is_license(text, EasyOcr.verif_license):
-                EasyOcr.coordinate.update({"tag": "license"})
+            if Algorithm.is_license(text, list2):
+                dict1.update({"tag": "license"})
+                # EasyOcr.coordinate.update({"tag": "license"})
 
-            if Algorithm.is_registration(text, EasyOcr.verif_regist):
-                EasyOcr.coordinate.update({"tag": "registration"})
+            if Algorithm.is_registration(text, list3):
+                dict1.update({"tag": "registration"})
+                # EasyOcr.coordinate.update({"tag": "registration"})
 
             if Algorithm.jumin_check(text):
-                EasyOcr.jumin_counter += 1
-                EasyOcr.coordinate.update({"jumin {}".format(EasyOcr.jumin_counter): [{'x': tl[0], 'y':tl[1]}, {
+                # EasyOcr.jumin_cnt += 1
+                cnt1 += 1
+                dict1.update({"jumin {}".format(cnt1): [{'x': tl[0], 'y':tl[1]}, {
                                           'x': tr[0], 'y':tr[1]}, {'x': br[0], 'y':br[1]}, {'x': bl[0], 'y':bl[1]}]})
 
             if Algorithm.licensenum_check(text):
-                EasyOcr.license_counter += 1
-                EasyOcr.coordinate.update({"license {}".format(EasyOcr.license_counter): [{'x': tl[0], 'y':tl[1]}, {
+                # EasyOcr.license_cnt += 1
+                cnt2 += 1
+                dict1.update({"license {}".format(cnt2): [{'x': tl[0], 'y':tl[1]}, {
                                           'x': tr[0], 'y':tr[1]}, {'x': br[0], 'y':br[1]}, {'x': bl[0], 'y':bl[1]}]})
 
-        return EasyOcr.coordinate
+        return dict1
+        # return EasyOcr.coordinate
 
 ####################################################################
 # app 구성 영역
@@ -131,16 +137,16 @@ def ocr():
         file = request.files['file']
         
         if file and GtnServer.allowed_file(file.filename):
-            # 변수 리셋
-            EasyOcr.coordinate = {}
-            EasyOcr.verif_idcard = list(0 for i in range(0, 5))
-            EasyOcr.verif_license = list(0 for i in range(0, 5))
-            EasyOcr.verif_regist = list(0 for i in range(0, 9))
-            EasyOcr.jumin_counter = 0
-            EasyOcr.license_counter = 0
+            # 검증에 필요한 자료구조 및 변수
+            coordinate = dict()
+            verif_idcard = list(0 for i in range(0, 5))
+            verif_license = list(0 for i in range(0, 5))
+            verif_regist = list(0 for i in range(0, 9))
+            jumin_cnt = 0
+            license_cnt = 0
 
             parsed = EasyOcr.reader.readtext(file.read())
-            contents = EasyOcr.get_coordinate(parsed)
+            contents = EasyOcr.get_coordinate(parsed, coordinate, verif_idcard, verif_license, verif_regist, jumin_cnt, license_cnt)
             # 개인정보 탐지 내용이 없을 경우
             if contents == {}:
                 return jsonify({
