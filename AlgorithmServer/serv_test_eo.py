@@ -3,7 +3,7 @@ import hashlib
 import requests
 import easyocr
 from flask_session import Session
-from processing import EasyOcr                  # OCR
+from processing import EasyOcr, PreProcessing                  # OCR
 
 ####################################################################
 # 임시 DB
