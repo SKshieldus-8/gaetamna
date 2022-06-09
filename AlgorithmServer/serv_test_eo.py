@@ -5,7 +5,7 @@ import requests
 import easyocr
 from flask_session import Session
 from algorithm import Algorithm                 # 개인정보 탐지 알고리즘 관련
-
+from processing import EasyOcr
 
 ####################################################################
 # 임시 DB
@@ -23,55 +23,6 @@ class GtnServer():
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in GtnServer.ALLOWED_EXTENSIONS
 ####################################################################
 
-# easyOCR 관련
-class EasyOcr():
-    reader = easyocr.Reader(['ko', 'en'], gpu=False)
-    # coordinate = dict()                                     # 데이터 저장 사전
-    # 검증 리스트
-    # verif_idcard = list(0 for i in range(0, 5))
-    # verif_license = list(0 for i in range(0, 5))
-    # verif_regist = list(0 for i in range(0, 9))
-    # jumin_cnt = 0                                       # 개인정보(주민번호) 갯수 카운팅 변수
-    # license_cnt = 0                                     # 개인정보(면허번호) 갯수 카운팅 변수
-
-    # 인식 텍스트 좌표값 추출 함수
-    def get_coordinate(result, dict1, list1, list2, list3, cnt1, cnt2):
-        # bounding box 좌표, 텍스트, 검증(1에 가까울수록 정확도 높음)
-        # KITTY, VOC 형식
-        for (bbox, text, prob) in result:
-            # top left, top right, bottom right, bottom left
-            (tl, tr, br, bl) = bbox
-            tl = (int(tl[0]), int(tl[1]))
-            tr = (int(tr[0]), int(tr[1]))
-            br = (int(br[0]), int(br[1]))
-            bl = (int(bl[0]), int(bl[1]))
-
-            if Algorithm.is_idcard(text, list1):
-                dict1.update({"tag": "idcard"})
-                # EasyOcr.coordinate.update({"tag": "idcard"})
-
-            if Algorithm.is_license(text, list2):
-                dict1.update({"tag": "license"})
-                # EasyOcr.coordinate.update({"tag": "license"})
-
-            if Algorithm.is_registration(text, list3):
-                dict1.update({"tag": "registration"})
-                # EasyOcr.coordinate.update({"tag": "registration"})
-
-            if Algorithm.jumin_check(text):
-                # EasyOcr.jumin_cnt += 1
-                cnt1 += 1
-                dict1.update({"jumin {}".format(cnt1): [{'x': tl[0], 'y':tl[1]}, {
-                                          'x': tr[0], 'y':tr[1]}, {'x': br[0], 'y':br[1]}, {'x': bl[0], 'y':bl[1]}]})
-
-            if Algorithm.licensenum_check(text):
-                # EasyOcr.license_cnt += 1
-                cnt2 += 1
-                dict1.update({"license {}".format(cnt2): [{'x': tl[0], 'y':tl[1]}, {
-                                          'x': tr[0], 'y':tr[1]}, {'x': br[0], 'y':br[1]}, {'x': bl[0], 'y':bl[1]}]})
-
-        return dict1
-        # return EasyOcr.coordinate
 
 ####################################################################
 # app 구성 영역
@@ -97,11 +48,12 @@ def login_auth():     # 임시
     # print(auth_data)
     if auth_data.get('id') == GtnServer.user_id and auth_data.get('pw') == GtnServer.pw:
         return jsonify({
+            "result": 1,
             "access_token": GtnServer.access_token
         })
     else:
         return jsonify({
-            "result": "1",
+            "result": 0,
             "msg": "계정 정보가 일치하지 않습니다."
         })
 
@@ -158,11 +110,11 @@ def ocr():
                 # return jsonify(contents)
                 # return json.dumps(contents, ensure_ascii=False, sort_keys=True)
                 # body = json.dumps(contents, ensure_ascii=False, sort_keys=True)
+                # return body
                 return {
                     "result": 1,
                     "data": contents
                 }
-                # return body
         # 파일 형식이 허용되지 않을 경우
         else:
             return jsonify({
