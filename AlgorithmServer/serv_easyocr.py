@@ -26,7 +26,8 @@ class PreProcessing():
 class EasyOcr():
     # easyocr(인식 언어, gpu 사용 여부), 결과 정보 저장 변수
     reader = easyocr.Reader(['ko', 'en'], gpu=False)
-    result = reader.readtext('./AlgorithmServer/dl01.jpg')
+    result = reader.readtext('./AlgorithmServer/files/test.jpg')
+    # result = reader.readtext('./AlgorithmServer/dl01.jpg')
     # result = reader.readtext('./AlgorithmServer/registcard_test.png')
 
     img = cv2.imread('./AlgorithmServer/registcard_test.png', cv2.IMREAD_GRAYSCALE)
@@ -84,7 +85,7 @@ class EasyOcr():
     # 개인정보 인식 영역 좌표값 .json 파일 추출 함수
     def extract_json(coordinate):
         # with open('./AlgorithmServer/easyocr_coordinate.json', 'w', encoding='utf-8') as outfile:
-        with open('./AlgorithmServer/easyocr_tilted_coordinate.json', 'w', encoding='utf-8') as outfile:
+        with open('./AlgorithmServer/files/test_coor.json', 'w', encoding='utf-8') as outfile:
             json.dump(coordinate, outfile, indent=4, ensure_ascii=False)
 
 
