@@ -1,11 +1,9 @@
-import re
-import hashlib
 from flask import Flask, json, jsonify, request, make_response
+import hashlib
 import requests
 import easyocr
 from flask_session import Session
-from algorithm import Algorithm                 # 개인정보 탐지 알고리즘 관련
-from processing import EasyOcr
+from processing import EasyOcr                  # OCR
 
 ####################################################################
 # 임시 DB

@@ -1,5 +1,5 @@
 import easyocr
-from algorithm import Algorithm
+from algorithm import Algorithm                 # 개인정보 탐지 알고리즘 관련
 
 
 # easyOCR 관련
