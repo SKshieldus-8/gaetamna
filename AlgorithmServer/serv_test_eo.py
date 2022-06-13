@@ -2,8 +2,12 @@ from flask import Flask, json, jsonify, request, make_response
 import hashlib
 import requests
 import easyocr
+import os
+import secrets  # 랜덤난수 생성(key2)
 from flask_session import Session
-from processing import EasyOcr, PreProcessing                  # OCR
+from processing import EasyOcr, PreProcessing                   # OCR
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM  # Galois Counter Mode의 AES-GCM 대칭키 암호화 모듈 (key3)
+from cryptography.fernet import Fernet                          # 대칭키 암호화 모듈 (key1)
 
 ####################################################################
 # 임시 DB
@@ -11,9 +15,21 @@ class GtnServer():
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}  # 허용 파일 확장자
     user_id = "msg7883"                # BillyMin
     pw = "test1234!"                    # test123!
-    salt = None                         # secret
-    # hash = hashlib.sha256(str(pw + salt).encode('utf-8')).hexdigest()
-    access_token = "ToKeN"              # PyJWT 사용          
+    salt = "skshieldus"                         # secret
+    access_token = "token"              # PyJWT 사용
+
+    test_message = b"Test message for encryption"
+
+    key1 = Fernet.generate_key()
+    ciphertext = Fernet(key1).encrypt(test_message)        # 암호화문
+    plaintext = Fernet(key1).decrypt(ciphertext)                             # 평문 - 복호화
+
+    key2 = secrets.token_hex(8)
+    hash = hashlib.sha256(str(key2 + salt).encode('utf-8')).hexdigest()
+
+    data = b"secret key"                # 암호화 내용
+    key3 = AESGCM.generate_key(bit_length=128)
+
     decry_key = "Key"                    # asdf(temp)
 
     # 파일 확장자 검증 함수
@@ -42,12 +58,16 @@ def test():
 # Login API
 @app.route('/login', methods=['POST'])
 def login_auth():     # 임시
-    auth_data = request.json
+    auth_data = request.form
     # print(auth_data)
     if auth_data['id'] == GtnServer.user_id and auth_data['pw'] == GtnServer.pw:
+        onekey = secrets.token_hex(8)
+        iv = secrets.token_hex(8)
         return jsonify({
             "result": 1,
-            "access_token": GtnServer.access_token
+            "access_token": GtnServer.access_token,
+            "key": onekey,
+            "iv": iv
         })
     else:
         return jsonify({
@@ -59,9 +79,9 @@ def login_auth():     # 임시
 @app.route('/decryption', methods=['POST', 'GET'])
 def get_key():
     pass
-    auth_token = request.get_json()
+    auth_token = request.form
     # 인증 성공 - 토큰 일치
-    if auth_token.get('access_token') == GtnServer.access_token:
+    if auth_token['access_token'] == GtnServer.access_token:
         return jsonify({
             "result": 1,
             "decry_key": GtnServer.decry_key
@@ -76,7 +96,13 @@ def get_key():
 # OCR API
 @app.route('/ocr', methods=['POST'])
 def ocr():
-    if request.method == 'POST':        
+    if request.method == 'POST': 
+
+        # print(GtnServer.key1)                 # Fernet 대칭키
+        # print(GtnServer.key2)
+        # print(GtnServer.key3)
+        # print(GtnServer.hash)
+
         # 파일이 첨부되어 있는가 확인
         if 'file' not in request.files:
             return jsonify({
@@ -100,8 +126,8 @@ def ocr():
             parsed = EasyOcr.reader.readtext(file.read())
             contents = list(EasyOcr.get_coordinate(parsed, tag, coordinate, verif_idcard, verif_license, verif_regist, jumin_cnt, license_cnt))
             
-            print(type(contents))
-            print(contents)
+            # print(type(contents))
+            # print(contents)
 
             # print(contents)
             # print(type(contents))
