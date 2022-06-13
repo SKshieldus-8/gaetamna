@@ -108,6 +108,10 @@
         "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\layout\\mainpage_tab3.xml"
     },
     {
+        "merged": "com.example.gtn.app-merged_res-26:/menu_menu.xml.flat",
+        "source": "com.example.gtn.app-main-28:/menu/menu.xml"
+    },
+    {
         "merged": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-merged_res-26:\\drawable-v24_img07.jpg.flat",
         "source": "C:\\Users\\Lydia\\.gradle\\daemon\\7.3.3\\com.example.gtn.app-main-28:\\drawable-v24\\img07.jpg"
     },

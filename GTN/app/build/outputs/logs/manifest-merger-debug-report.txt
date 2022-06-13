@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-35:12
-INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-35:12
-INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-35:12
-INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-35:12
+ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-36:12
 MERGED from [io.realm:realm-android-library:10.11.0] C:\Users\Lydia\.gradle\caches\transforms-3\d929174470fa36c03f784f8b1e8c26b7\transformed\realm-android-library-10.11.0\AndroidManifest.xml:2:1-9:12
 MERGED from [io.realm:realm-android-kotlin-extensions:10.11.0] C:\Users\Lydia\.gradle\caches\transforms-3\a93aff2e24460c49b251eb8c0dc091b2\transformed\realm-android-kotlin-extensions-10.11.0\AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.core:core-ktx:1.7.0] C:\Users\Lydia\.gradle\caches\transforms-3\c1c299f118de28741a4223c5d7d8cb97\transformed\core-ktx-1.7.0\AndroidManifest.xml:2:1-9:12
@@ -48,22 +48,22 @@ MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Lydia\.gradle\ca
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Lydia\.gradle\caches\transforms-3\7c2b220662ef94319f7187e1bfb9e5f3\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] C:\Users\Lydia\.gradle\caches\transforms-3\b2d747eb2de50e2d571c641b0252d27c\transformed\print-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.annotation:annotation-experimental:1.1.0] C:\Users\Lydia\.gradle\caches\transforms-3\03f4057910197797544dda7af9d6a723\transformed\annotation-experimental-1.1.0\AndroidManifest.xml:17:1-24:12
-INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-35:12
-INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-35:12
-INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-36:12
 	package
 		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:4:5-30
 		INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-35:12
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-36:12
 		INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml
 	xmlns:tools
 		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:3:5-51
 	android:versionCode
 		INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-35:12
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:1-36:12
 		INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:2:11-69
@@ -84,7 +84,7 @@ ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\Androi
 	android:name
 		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:9:22-64
 application
-ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:11:5-33:19
+ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:11:5-34:19
 MERGED from [com.google.android.material:material:1.6.0] C:\Users\Lydia\.gradle\caches\transforms-3\79b6391953ca3004dc26c5d49dcfb02a\transformed\material-1.6.0\AndroidManifest.xml:24:5-20
 MERGED from [com.google.android.material:material:1.6.0] C:\Users\Lydia\.gradle\caches\transforms-3\79b6391953ca3004dc26c5d49dcfb02a\transformed\material-1.6.0\AndroidManifest.xml:24:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Lydia\.gradle\caches\transforms-3\90c36998fe5ca7baebe9e8482ad77210\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -100,51 +100,53 @@ MERGED from [androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Lydia\.gradle\
 MERGED from [androidx.startup:startup-runtime:1.0.0] C:\Users\Lydia\.gradle\caches\transforms-3\0143c3a691a54058420c92fb0c311021\transformed\startup-runtime-1.0.0\AndroidManifest.xml:25:5-31:19
 MERGED from [androidx.startup:startup-runtime:1.0.0] C:\Users\Lydia\.gradle\caches\transforms-3\0143c3a691a54058420c92fb0c311021\transformed\startup-runtime-1.0.0\AndroidManifest.xml:25:5-31:19
 	android:requestLegacyExternalStorage
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:12:9-52
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:13:9-52
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.7.0] C:\Users\Lydia\.gradle\caches\transforms-3\fe91e0e7eb1250ec2d2bcc59802ee930\transformed\core-1.7.0\AndroidManifest.xml:24:18-86
 	android:supportsRtl
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:19:9-35
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:20:9-35
 	android:label
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:17:9-41
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:18:9-41
 	android:fullBackupContent
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:15:9-54
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:16:9-54
 	android:roundIcon
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:18:9-54
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:19:9-54
 	tools:targetApi
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:21:9-29
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:22:9-29
 	android:icon
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:16:9-43
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:17:9-43
 	android:allowBackup
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:13:9-35
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:14:9-35
 	android:theme
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:20:9-41
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:21:9-41
 	android:dataExtractionRules
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:14:9-65
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:15:9-65
+	android:name
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:12:9-40
 activity#com.example.gtn.MainActivity
-ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:22:9-30:20
+ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:23:9-31:20
 	android:exported
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:24:13-36
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:25:13-36
 	android:name
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:23:13-41
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:24:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:25:13-29:29
+ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:26:13-30:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:26:17-69
+ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:27:17-69
 	android:name
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:26:25-66
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:27:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:28:17-77
+ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:29:17-77
 	android:name
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:28:27-74
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:29:27-74
 activity#com.example.gtn.SecondActivity
-ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:31:9-52
+ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:32:9-52
 	android:name
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:31:19-49
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:32:19-49
 activity#com.example.gtn.ThirdActivity
-ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:32:9-51
+ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:33:9-51
 	android:name
-		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:32:19-48
+		ADDED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml:33:19-48
 uses-sdk
 INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\Lydia\Downloads\2022\2022_05\Project\GTN\app\src\main\AndroidManifest.xml

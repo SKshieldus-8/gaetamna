@@ -47,6 +47,8 @@ id ViewPage_switch
 id ViewPage_textviewName
 id editTextTextPersonName2
 id gridView
+id onBackground
+id refresh
 id tab1_gridView
 id tab2_gridView
 id tab3_gridView
@@ -59,6 +61,7 @@ layout mainpage_tab4
 layout temppage
 layout testgridview
 layout viewpage
+menu menu
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
