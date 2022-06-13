@@ -43,16 +43,20 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
     implements RealmObjectProxy, com_example_gtn_ImageDBRealmProxyInterface {
 
     static final class ImageDBColumnInfo extends ColumnInfo {
-        long imageNameColKey;
-        long imageTypeColKey;
-        long personalDataColKey;
+        long pkColKey;
+        long imgNameColKey;
+        long imgTypeColKey;
+        long personalInfoColKey;
+        long shootingTimeColKey;
 
         ImageDBColumnInfo(OsSchemaInfo schemaInfo) {
-            super(3);
+            super(5);
             OsObjectSchemaInfo objectSchemaInfo = schemaInfo.getObjectSchemaInfo("ImageDB");
-            this.imageNameColKey = addColumnDetails("imageName", "imageName", objectSchemaInfo);
-            this.imageTypeColKey = addColumnDetails("imageType", "imageType", objectSchemaInfo);
-            this.personalDataColKey = addColumnDetails("personalData", "personalData", objectSchemaInfo);
+            this.pkColKey = addColumnDetails("pk", "pk", objectSchemaInfo);
+            this.imgNameColKey = addColumnDetails("imgName", "imgName", objectSchemaInfo);
+            this.imgTypeColKey = addColumnDetails("imgType", "imgType", objectSchemaInfo);
+            this.personalInfoColKey = addColumnDetails("personalInfo", "personalInfo", objectSchemaInfo);
+            this.shootingTimeColKey = addColumnDetails("shootingTime", "shootingTime", objectSchemaInfo);
         }
 
         ImageDBColumnInfo(ColumnInfo src, boolean mutable) {
@@ -69,9 +73,11 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
         protected final void copy(ColumnInfo rawSrc, ColumnInfo rawDst) {
             final ImageDBColumnInfo src = (ImageDBColumnInfo) rawSrc;
             final ImageDBColumnInfo dst = (ImageDBColumnInfo) rawDst;
-            dst.imageNameColKey = src.imageNameColKey;
-            dst.imageTypeColKey = src.imageTypeColKey;
-            dst.personalDataColKey = src.personalDataColKey;
+            dst.pkColKey = src.pkColKey;
+            dst.imgNameColKey = src.imgNameColKey;
+            dst.imgTypeColKey = src.imgTypeColKey;
+            dst.personalInfoColKey = src.personalInfoColKey;
+            dst.shootingTimeColKey = src.shootingTimeColKey;
         }
     }
 
@@ -101,83 +107,141 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
 
     @Override
     @SuppressWarnings("cast")
-    public String realmGet$imageName() {
+    public String realmGet$pk() {
         proxyState.getRealm$realm().checkIfValid();
-        return (java.lang.String) proxyState.getRow$realm().getString(columnInfo.imageNameColKey);
+        return (java.lang.String) proxyState.getRow$realm().getString(columnInfo.pkColKey);
     }
 
     @Override
-    public void realmSet$imageName(String value) {
+    public void realmSet$pk(String value) {
         if (proxyState.isUnderConstruction()) {
             // default value of the primary key is always ignored.
             return;
         }
 
         proxyState.getRealm$realm().checkIfValid();
-        throw new io.realm.exceptions.RealmException("Primary key field 'imageName' cannot be changed after object was created.");
+        throw new io.realm.exceptions.RealmException("Primary key field 'pk' cannot be changed after object was created.");
     }
 
     @Override
     @SuppressWarnings("cast")
-    public String realmGet$imageType() {
+    public String realmGet$imgName() {
         proxyState.getRealm$realm().checkIfValid();
-        return (java.lang.String) proxyState.getRow$realm().getString(columnInfo.imageTypeColKey);
+        return (java.lang.String) proxyState.getRow$realm().getString(columnInfo.imgNameColKey);
     }
 
     @Override
-    public void realmSet$imageType(String value) {
+    public void realmSet$imgName(String value) {
         if (proxyState.isUnderConstruction()) {
             if (!proxyState.getAcceptDefaultValue$realm()) {
                 return;
             }
             final Row row = proxyState.getRow$realm();
             if (value == null) {
-                throw new IllegalArgumentException("Trying to set non-nullable field 'imageType' to null.");
+                throw new IllegalArgumentException("Trying to set non-nullable field 'imgName' to null.");
             }
-            row.getTable().setString(columnInfo.imageTypeColKey, row.getObjectKey(), value, true);
+            row.getTable().setString(columnInfo.imgNameColKey, row.getObjectKey(), value, true);
             return;
         }
 
         proxyState.getRealm$realm().checkIfValid();
         if (value == null) {
-            throw new IllegalArgumentException("Trying to set non-nullable field 'imageType' to null.");
+            throw new IllegalArgumentException("Trying to set non-nullable field 'imgName' to null.");
         }
-        proxyState.getRow$realm().setString(columnInfo.imageTypeColKey, value);
+        proxyState.getRow$realm().setString(columnInfo.imgNameColKey, value);
     }
 
     @Override
     @SuppressWarnings("cast")
-    public String realmGet$personalData() {
+    public String realmGet$imgType() {
         proxyState.getRealm$realm().checkIfValid();
-        return (java.lang.String) proxyState.getRow$realm().getString(columnInfo.personalDataColKey);
+        return (java.lang.String) proxyState.getRow$realm().getString(columnInfo.imgTypeColKey);
     }
 
     @Override
-    public void realmSet$personalData(String value) {
+    public void realmSet$imgType(String value) {
         if (proxyState.isUnderConstruction()) {
             if (!proxyState.getAcceptDefaultValue$realm()) {
                 return;
             }
             final Row row = proxyState.getRow$realm();
             if (value == null) {
-                throw new IllegalArgumentException("Trying to set non-nullable field 'personalData' to null.");
+                throw new IllegalArgumentException("Trying to set non-nullable field 'imgType' to null.");
             }
-            row.getTable().setString(columnInfo.personalDataColKey, row.getObjectKey(), value, true);
+            row.getTable().setString(columnInfo.imgTypeColKey, row.getObjectKey(), value, true);
             return;
         }
 
         proxyState.getRealm$realm().checkIfValid();
         if (value == null) {
-            throw new IllegalArgumentException("Trying to set non-nullable field 'personalData' to null.");
+            throw new IllegalArgumentException("Trying to set non-nullable field 'imgType' to null.");
         }
-        proxyState.getRow$realm().setString(columnInfo.personalDataColKey, value);
+        proxyState.getRow$realm().setString(columnInfo.imgTypeColKey, value);
+    }
+
+    @Override
+    @SuppressWarnings("cast")
+    public String realmGet$personalInfo() {
+        proxyState.getRealm$realm().checkIfValid();
+        return (java.lang.String) proxyState.getRow$realm().getString(columnInfo.personalInfoColKey);
+    }
+
+    @Override
+    public void realmSet$personalInfo(String value) {
+        if (proxyState.isUnderConstruction()) {
+            if (!proxyState.getAcceptDefaultValue$realm()) {
+                return;
+            }
+            final Row row = proxyState.getRow$realm();
+            if (value == null) {
+                throw new IllegalArgumentException("Trying to set non-nullable field 'personalInfo' to null.");
+            }
+            row.getTable().setString(columnInfo.personalInfoColKey, row.getObjectKey(), value, true);
+            return;
+        }
+
+        proxyState.getRealm$realm().checkIfValid();
+        if (value == null) {
+            throw new IllegalArgumentException("Trying to set non-nullable field 'personalInfo' to null.");
+        }
+        proxyState.getRow$realm().setString(columnInfo.personalInfoColKey, value);
+    }
+
+    @Override
+    @SuppressWarnings("cast")
+    public String realmGet$shootingTime() {
+        proxyState.getRealm$realm().checkIfValid();
+        return (java.lang.String) proxyState.getRow$realm().getString(columnInfo.shootingTimeColKey);
+    }
+
+    @Override
+    public void realmSet$shootingTime(String value) {
+        if (proxyState.isUnderConstruction()) {
+            if (!proxyState.getAcceptDefaultValue$realm()) {
+                return;
+            }
+            final Row row = proxyState.getRow$realm();
+            if (value == null) {
+                throw new IllegalArgumentException("Trying to set non-nullable field 'shootingTime' to null.");
+            }
+            row.getTable().setString(columnInfo.shootingTimeColKey, row.getObjectKey(), value, true);
+            return;
+        }
+
+        proxyState.getRealm$realm().checkIfValid();
+        if (value == null) {
+            throw new IllegalArgumentException("Trying to set non-nullable field 'shootingTime' to null.");
+        }
+        proxyState.getRow$realm().setString(columnInfo.shootingTimeColKey, value);
     }
 
     private static OsObjectSchemaInfo createExpectedObjectSchemaInfo() {
-        OsObjectSchemaInfo.Builder builder = new OsObjectSchemaInfo.Builder(NO_ALIAS, "ImageDB", false, 3, 0);
-        builder.addPersistedProperty(NO_ALIAS, "imageName", RealmFieldType.STRING, Property.PRIMARY_KEY, !Property.INDEXED, Property.REQUIRED);
-        builder.addPersistedProperty(NO_ALIAS, "imageType", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, Property.REQUIRED);
-        builder.addPersistedProperty(NO_ALIAS, "personalData", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, Property.REQUIRED);
+        OsObjectSchemaInfo.Builder builder = new OsObjectSchemaInfo.Builder(NO_ALIAS, "ImageDB", false, 5, 0);
+        builder.addPersistedProperty(NO_ALIAS, "pk", RealmFieldType.STRING, Property.PRIMARY_KEY, !Property.INDEXED, Property.REQUIRED);
+        builder.addPersistedProperty(NO_ALIAS, "imgName", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, Property.REQUIRED);
+        builder.addPersistedProperty(NO_ALIAS, "imgType", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, Property.REQUIRED);
+        builder.addPersistedProperty(NO_ALIAS, "personalInfo", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, Property.REQUIRED);
+        builder.addPersistedProperty(NO_ALIAS, "shootingTime", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, Property.REQUIRED);
         return builder.build();
     }
 
@@ -205,10 +269,10 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
         if (update) {
             Table table = realm.getTable(com.example.gtn.ImageDB.class);
             ImageDBColumnInfo columnInfo = (ImageDBColumnInfo) realm.getSchema().getColumnInfo(com.example.gtn.ImageDB.class);
-            long pkColumnKey = columnInfo.imageNameColKey;
+            long pkColumnKey = columnInfo.pkColKey;
             long objKey = Table.NO_MATCH;
-            if (!json.isNull("imageName")) {
-                objKey = table.findFirstString(pkColumnKey, json.getString("imageName"));
+            if (!json.isNull("pk")) {
+                objKey = table.findFirstString(pkColumnKey, json.getString("pk"));
             }
             if (objKey != Table.NO_MATCH) {
                 final BaseRealm.RealmObjectContext objectContext = BaseRealm.objectContext.get();
@@ -221,30 +285,44 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
             }
         }
         if (obj == null) {
-            if (json.has("imageName")) {
-                if (json.isNull("imageName")) {
+            if (json.has("pk")) {
+                if (json.isNull("pk")) {
                     obj = (io.realm.com_example_gtn_ImageDBRealmProxy) realm.createObjectInternal(com.example.gtn.ImageDB.class, null, true, excludeFields);
                 } else {
-                    obj = (io.realm.com_example_gtn_ImageDBRealmProxy) realm.createObjectInternal(com.example.gtn.ImageDB.class, json.getString("imageName"), true, excludeFields);
+                    obj = (io.realm.com_example_gtn_ImageDBRealmProxy) realm.createObjectInternal(com.example.gtn.ImageDB.class, json.getString("pk"), true, excludeFields);
                 }
             } else {
-                throw new IllegalArgumentException("JSON object doesn't have the primary key field 'imageName'.");
+                throw new IllegalArgumentException("JSON object doesn't have the primary key field 'pk'.");
             }
         }
 
         final com_example_gtn_ImageDBRealmProxyInterface objProxy = (com_example_gtn_ImageDBRealmProxyInterface) obj;
-        if (json.has("imageType")) {
-            if (json.isNull("imageType")) {
-                objProxy.realmSet$imageType(null);
+        if (json.has("imgName")) {
+            if (json.isNull("imgName")) {
+                objProxy.realmSet$imgName(null);
             } else {
-                objProxy.realmSet$imageType((String) json.getString("imageType"));
+                objProxy.realmSet$imgName((String) json.getString("imgName"));
             }
         }
-        if (json.has("personalData")) {
-            if (json.isNull("personalData")) {
-                objProxy.realmSet$personalData(null);
+        if (json.has("imgType")) {
+            if (json.isNull("imgType")) {
+                objProxy.realmSet$imgType(null);
             } else {
-                objProxy.realmSet$personalData((String) json.getString("personalData"));
+                objProxy.realmSet$imgType((String) json.getString("imgType"));
+            }
+        }
+        if (json.has("personalInfo")) {
+            if (json.isNull("personalInfo")) {
+                objProxy.realmSet$personalInfo(null);
+            } else {
+                objProxy.realmSet$personalInfo((String) json.getString("personalInfo"));
+            }
+        }
+        if (json.has("shootingTime")) {
+            if (json.isNull("shootingTime")) {
+                objProxy.realmSet$shootingTime(null);
+            } else {
+                objProxy.realmSet$shootingTime((String) json.getString("shootingTime"));
             }
         }
         return obj;
@@ -261,27 +339,41 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
         while (reader.hasNext()) {
             String name = reader.nextName();
             if (false) {
-            } else if (name.equals("imageName")) {
+            } else if (name.equals("pk")) {
                 if (reader.peek() != JsonToken.NULL) {
-                    objProxy.realmSet$imageName((String) reader.nextString());
+                    objProxy.realmSet$pk((String) reader.nextString());
                 } else {
                     reader.skipValue();
-                    objProxy.realmSet$imageName(null);
+                    objProxy.realmSet$pk(null);
                 }
                 jsonHasPrimaryKey = true;
-            } else if (name.equals("imageType")) {
+            } else if (name.equals("imgName")) {
                 if (reader.peek() != JsonToken.NULL) {
-                    objProxy.realmSet$imageType((String) reader.nextString());
+                    objProxy.realmSet$imgName((String) reader.nextString());
                 } else {
                     reader.skipValue();
-                    objProxy.realmSet$imageType(null);
+                    objProxy.realmSet$imgName(null);
                 }
-            } else if (name.equals("personalData")) {
+            } else if (name.equals("imgType")) {
                 if (reader.peek() != JsonToken.NULL) {
-                    objProxy.realmSet$personalData((String) reader.nextString());
+                    objProxy.realmSet$imgType((String) reader.nextString());
                 } else {
                     reader.skipValue();
-                    objProxy.realmSet$personalData(null);
+                    objProxy.realmSet$imgType(null);
+                }
+            } else if (name.equals("personalInfo")) {
+                if (reader.peek() != JsonToken.NULL) {
+                    objProxy.realmSet$personalInfo((String) reader.nextString());
+                } else {
+                    reader.skipValue();
+                    objProxy.realmSet$personalInfo(null);
+                }
+            } else if (name.equals("shootingTime")) {
+                if (reader.peek() != JsonToken.NULL) {
+                    objProxy.realmSet$shootingTime((String) reader.nextString());
+                } else {
+                    reader.skipValue();
+                    objProxy.realmSet$shootingTime(null);
                 }
             } else {
                 reader.skipValue();
@@ -289,7 +381,7 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
         }
         reader.endObject();
         if (!jsonHasPrimaryKey) {
-            throw new IllegalArgumentException("JSON object doesn't have the primary key field 'imageName'.");
+            throw new IllegalArgumentException("JSON object doesn't have the primary key field 'pk'.");
         }
         return realm.copyToRealmOrUpdate(obj);
     }
@@ -323,8 +415,8 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
         boolean canUpdate = update;
         if (canUpdate) {
             Table table = realm.getTable(com.example.gtn.ImageDB.class);
-            long pkColumnKey = columnInfo.imageNameColKey;
-            long objKey = table.findFirstString(pkColumnKey, ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imageName());
+            long pkColumnKey = columnInfo.pkColKey;
+            long objKey = table.findFirstString(pkColumnKey, ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$pk());
             if (objKey == Table.NO_MATCH) {
                 canUpdate = false;
             } else {
@@ -353,9 +445,11 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
         OsObjectBuilder builder = new OsObjectBuilder(table, flags);
 
         // Add all non-"object reference" fields
-        builder.addString(columnInfo.imageNameColKey, unmanagedSource.realmGet$imageName());
-        builder.addString(columnInfo.imageTypeColKey, unmanagedSource.realmGet$imageType());
-        builder.addString(columnInfo.personalDataColKey, unmanagedSource.realmGet$personalData());
+        builder.addString(columnInfo.pkColKey, unmanagedSource.realmGet$pk());
+        builder.addString(columnInfo.imgNameColKey, unmanagedSource.realmGet$imgName());
+        builder.addString(columnInfo.imgTypeColKey, unmanagedSource.realmGet$imgType());
+        builder.addString(columnInfo.personalInfoColKey, unmanagedSource.realmGet$personalInfo());
+        builder.addString(columnInfo.shootingTimeColKey, unmanagedSource.realmGet$shootingTime());
 
         // Create the underlying object and cache it before setting any object/objectlist references
         // This will allow us to break any circular dependencies by using the object cache.
@@ -373,9 +467,9 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
         Table table = realm.getTable(com.example.gtn.ImageDB.class);
         long tableNativePtr = table.getNativePtr();
         ImageDBColumnInfo columnInfo = (ImageDBColumnInfo) realm.getSchema().getColumnInfo(com.example.gtn.ImageDB.class);
-        long pkColumnKey = columnInfo.imageNameColKey;
+        long pkColumnKey = columnInfo.pkColKey;
         long objKey = Table.NO_MATCH;
-        Object primaryKeyValue = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imageName();
+        Object primaryKeyValue = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$pk();
         if (primaryKeyValue != null) {
             objKey = Table.nativeFindFirstString(tableNativePtr, pkColumnKey, (String)primaryKeyValue);
         }
@@ -385,13 +479,21 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
             Table.throwDuplicatePrimaryKeyException(primaryKeyValue);
         }
         cache.put(object, objKey);
-        String realmGet$imageType = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imageType();
-        if (realmGet$imageType != null) {
-            Table.nativeSetString(tableNativePtr, columnInfo.imageTypeColKey, objKey, realmGet$imageType, false);
+        String realmGet$imgName = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imgName();
+        if (realmGet$imgName != null) {
+            Table.nativeSetString(tableNativePtr, columnInfo.imgNameColKey, objKey, realmGet$imgName, false);
         }
-        String realmGet$personalData = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$personalData();
-        if (realmGet$personalData != null) {
-            Table.nativeSetString(tableNativePtr, columnInfo.personalDataColKey, objKey, realmGet$personalData, false);
+        String realmGet$imgType = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imgType();
+        if (realmGet$imgType != null) {
+            Table.nativeSetString(tableNativePtr, columnInfo.imgTypeColKey, objKey, realmGet$imgType, false);
+        }
+        String realmGet$personalInfo = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$personalInfo();
+        if (realmGet$personalInfo != null) {
+            Table.nativeSetString(tableNativePtr, columnInfo.personalInfoColKey, objKey, realmGet$personalInfo, false);
+        }
+        String realmGet$shootingTime = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$shootingTime();
+        if (realmGet$shootingTime != null) {
+            Table.nativeSetString(tableNativePtr, columnInfo.shootingTimeColKey, objKey, realmGet$shootingTime, false);
         }
         return objKey;
     }
@@ -400,7 +502,7 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
         Table table = realm.getTable(com.example.gtn.ImageDB.class);
         long tableNativePtr = table.getNativePtr();
         ImageDBColumnInfo columnInfo = (ImageDBColumnInfo) realm.getSchema().getColumnInfo(com.example.gtn.ImageDB.class);
-        long pkColumnKey = columnInfo.imageNameColKey;
+        long pkColumnKey = columnInfo.pkColKey;
         com.example.gtn.ImageDB object = null;
         while (objects.hasNext()) {
             object = (com.example.gtn.ImageDB) objects.next();
@@ -412,7 +514,7 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
                 continue;
             }
             long objKey = Table.NO_MATCH;
-            Object primaryKeyValue = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imageName();
+            Object primaryKeyValue = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$pk();
             if (primaryKeyValue != null) {
                 objKey = Table.nativeFindFirstString(tableNativePtr, pkColumnKey, (String)primaryKeyValue);
             }
@@ -422,13 +524,21 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
                 Table.throwDuplicatePrimaryKeyException(primaryKeyValue);
             }
             cache.put(object, objKey);
-            String realmGet$imageType = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imageType();
-            if (realmGet$imageType != null) {
-                Table.nativeSetString(tableNativePtr, columnInfo.imageTypeColKey, objKey, realmGet$imageType, false);
+            String realmGet$imgName = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imgName();
+            if (realmGet$imgName != null) {
+                Table.nativeSetString(tableNativePtr, columnInfo.imgNameColKey, objKey, realmGet$imgName, false);
             }
-            String realmGet$personalData = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$personalData();
-            if (realmGet$personalData != null) {
-                Table.nativeSetString(tableNativePtr, columnInfo.personalDataColKey, objKey, realmGet$personalData, false);
+            String realmGet$imgType = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imgType();
+            if (realmGet$imgType != null) {
+                Table.nativeSetString(tableNativePtr, columnInfo.imgTypeColKey, objKey, realmGet$imgType, false);
+            }
+            String realmGet$personalInfo = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$personalInfo();
+            if (realmGet$personalInfo != null) {
+                Table.nativeSetString(tableNativePtr, columnInfo.personalInfoColKey, objKey, realmGet$personalInfo, false);
+            }
+            String realmGet$shootingTime = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$shootingTime();
+            if (realmGet$shootingTime != null) {
+                Table.nativeSetString(tableNativePtr, columnInfo.shootingTimeColKey, objKey, realmGet$shootingTime, false);
             }
         }
     }
@@ -440,9 +550,9 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
         Table table = realm.getTable(com.example.gtn.ImageDB.class);
         long tableNativePtr = table.getNativePtr();
         ImageDBColumnInfo columnInfo = (ImageDBColumnInfo) realm.getSchema().getColumnInfo(com.example.gtn.ImageDB.class);
-        long pkColumnKey = columnInfo.imageNameColKey;
+        long pkColumnKey = columnInfo.pkColKey;
         long objKey = Table.NO_MATCH;
-        Object primaryKeyValue = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imageName();
+        Object primaryKeyValue = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$pk();
         if (primaryKeyValue != null) {
             objKey = Table.nativeFindFirstString(tableNativePtr, pkColumnKey, (String)primaryKeyValue);
         }
@@ -450,17 +560,29 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
             objKey = OsObject.createRowWithPrimaryKey(table, pkColumnKey, primaryKeyValue);
         }
         cache.put(object, objKey);
-        String realmGet$imageType = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imageType();
-        if (realmGet$imageType != null) {
-            Table.nativeSetString(tableNativePtr, columnInfo.imageTypeColKey, objKey, realmGet$imageType, false);
+        String realmGet$imgName = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imgName();
+        if (realmGet$imgName != null) {
+            Table.nativeSetString(tableNativePtr, columnInfo.imgNameColKey, objKey, realmGet$imgName, false);
         } else {
-            Table.nativeSetNull(tableNativePtr, columnInfo.imageTypeColKey, objKey, false);
+            Table.nativeSetNull(tableNativePtr, columnInfo.imgNameColKey, objKey, false);
         }
-        String realmGet$personalData = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$personalData();
-        if (realmGet$personalData != null) {
-            Table.nativeSetString(tableNativePtr, columnInfo.personalDataColKey, objKey, realmGet$personalData, false);
+        String realmGet$imgType = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imgType();
+        if (realmGet$imgType != null) {
+            Table.nativeSetString(tableNativePtr, columnInfo.imgTypeColKey, objKey, realmGet$imgType, false);
         } else {
-            Table.nativeSetNull(tableNativePtr, columnInfo.personalDataColKey, objKey, false);
+            Table.nativeSetNull(tableNativePtr, columnInfo.imgTypeColKey, objKey, false);
+        }
+        String realmGet$personalInfo = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$personalInfo();
+        if (realmGet$personalInfo != null) {
+            Table.nativeSetString(tableNativePtr, columnInfo.personalInfoColKey, objKey, realmGet$personalInfo, false);
+        } else {
+            Table.nativeSetNull(tableNativePtr, columnInfo.personalInfoColKey, objKey, false);
+        }
+        String realmGet$shootingTime = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$shootingTime();
+        if (realmGet$shootingTime != null) {
+            Table.nativeSetString(tableNativePtr, columnInfo.shootingTimeColKey, objKey, realmGet$shootingTime, false);
+        } else {
+            Table.nativeSetNull(tableNativePtr, columnInfo.shootingTimeColKey, objKey, false);
         }
         return objKey;
     }
@@ -469,7 +591,7 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
         Table table = realm.getTable(com.example.gtn.ImageDB.class);
         long tableNativePtr = table.getNativePtr();
         ImageDBColumnInfo columnInfo = (ImageDBColumnInfo) realm.getSchema().getColumnInfo(com.example.gtn.ImageDB.class);
-        long pkColumnKey = columnInfo.imageNameColKey;
+        long pkColumnKey = columnInfo.pkColKey;
         com.example.gtn.ImageDB object = null;
         while (objects.hasNext()) {
             object = (com.example.gtn.ImageDB) objects.next();
@@ -481,7 +603,7 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
                 continue;
             }
             long objKey = Table.NO_MATCH;
-            Object primaryKeyValue = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imageName();
+            Object primaryKeyValue = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$pk();
             if (primaryKeyValue != null) {
                 objKey = Table.nativeFindFirstString(tableNativePtr, pkColumnKey, (String)primaryKeyValue);
             }
@@ -489,17 +611,29 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
                 objKey = OsObject.createRowWithPrimaryKey(table, pkColumnKey, primaryKeyValue);
             }
             cache.put(object, objKey);
-            String realmGet$imageType = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imageType();
-            if (realmGet$imageType != null) {
-                Table.nativeSetString(tableNativePtr, columnInfo.imageTypeColKey, objKey, realmGet$imageType, false);
+            String realmGet$imgName = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imgName();
+            if (realmGet$imgName != null) {
+                Table.nativeSetString(tableNativePtr, columnInfo.imgNameColKey, objKey, realmGet$imgName, false);
             } else {
-                Table.nativeSetNull(tableNativePtr, columnInfo.imageTypeColKey, objKey, false);
+                Table.nativeSetNull(tableNativePtr, columnInfo.imgNameColKey, objKey, false);
             }
-            String realmGet$personalData = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$personalData();
-            if (realmGet$personalData != null) {
-                Table.nativeSetString(tableNativePtr, columnInfo.personalDataColKey, objKey, realmGet$personalData, false);
+            String realmGet$imgType = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$imgType();
+            if (realmGet$imgType != null) {
+                Table.nativeSetString(tableNativePtr, columnInfo.imgTypeColKey, objKey, realmGet$imgType, false);
             } else {
-                Table.nativeSetNull(tableNativePtr, columnInfo.personalDataColKey, objKey, false);
+                Table.nativeSetNull(tableNativePtr, columnInfo.imgTypeColKey, objKey, false);
+            }
+            String realmGet$personalInfo = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$personalInfo();
+            if (realmGet$personalInfo != null) {
+                Table.nativeSetString(tableNativePtr, columnInfo.personalInfoColKey, objKey, realmGet$personalInfo, false);
+            } else {
+                Table.nativeSetNull(tableNativePtr, columnInfo.personalInfoColKey, objKey, false);
+            }
+            String realmGet$shootingTime = ((com_example_gtn_ImageDBRealmProxyInterface) object).realmGet$shootingTime();
+            if (realmGet$shootingTime != null) {
+                Table.nativeSetString(tableNativePtr, columnInfo.shootingTimeColKey, objKey, realmGet$shootingTime, false);
+            } else {
+                Table.nativeSetNull(tableNativePtr, columnInfo.shootingTimeColKey, objKey, false);
             }
         }
     }
@@ -524,9 +658,11 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
         com_example_gtn_ImageDBRealmProxyInterface unmanagedCopy = (com_example_gtn_ImageDBRealmProxyInterface) unmanagedObject;
         com_example_gtn_ImageDBRealmProxyInterface realmSource = (com_example_gtn_ImageDBRealmProxyInterface) realmObject;
         Realm objectRealm = (Realm) ((RealmObjectProxy) realmObject).realmGet$proxyState().getRealm$realm();
-        unmanagedCopy.realmSet$imageName(realmSource.realmGet$imageName());
-        unmanagedCopy.realmSet$imageType(realmSource.realmGet$imageType());
-        unmanagedCopy.realmSet$personalData(realmSource.realmGet$personalData());
+        unmanagedCopy.realmSet$pk(realmSource.realmGet$pk());
+        unmanagedCopy.realmSet$imgName(realmSource.realmGet$imgName());
+        unmanagedCopy.realmSet$imgType(realmSource.realmGet$imgType());
+        unmanagedCopy.realmSet$personalInfo(realmSource.realmGet$personalInfo());
+        unmanagedCopy.realmSet$shootingTime(realmSource.realmGet$shootingTime());
 
         return unmanagedObject;
     }
@@ -536,9 +672,11 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
         com_example_gtn_ImageDBRealmProxyInterface realmObjectSource = (com_example_gtn_ImageDBRealmProxyInterface) newObject;
         Table table = realm.getTable(com.example.gtn.ImageDB.class);
         OsObjectBuilder builder = new OsObjectBuilder(table, flags);
-        builder.addString(columnInfo.imageNameColKey, realmObjectSource.realmGet$imageName());
-        builder.addString(columnInfo.imageTypeColKey, realmObjectSource.realmGet$imageType());
-        builder.addString(columnInfo.personalDataColKey, realmObjectSource.realmGet$personalData());
+        builder.addString(columnInfo.pkColKey, realmObjectSource.realmGet$pk());
+        builder.addString(columnInfo.imgNameColKey, realmObjectSource.realmGet$imgName());
+        builder.addString(columnInfo.imgTypeColKey, realmObjectSource.realmGet$imgType());
+        builder.addString(columnInfo.personalInfoColKey, realmObjectSource.realmGet$personalInfo());
+        builder.addString(columnInfo.shootingTimeColKey, realmObjectSource.realmGet$shootingTime());
 
         builder.updateExistingTopLevelObject();
         return realmObject;
@@ -551,16 +689,24 @@ public class com_example_gtn_ImageDBRealmProxy extends com.example.gtn.ImageDB
             return "Invalid object";
         }
         StringBuilder stringBuilder = new StringBuilder("ImageDB = proxy[");
-        stringBuilder.append("{imageName:");
-        stringBuilder.append(realmGet$imageName());
+        stringBuilder.append("{pk:");
+        stringBuilder.append(realmGet$pk());
         stringBuilder.append("}");
         stringBuilder.append(",");
-        stringBuilder.append("{imageType:");
-        stringBuilder.append(realmGet$imageType());
+        stringBuilder.append("{imgName:");
+        stringBuilder.append(realmGet$imgName());
         stringBuilder.append("}");
         stringBuilder.append(",");
-        stringBuilder.append("{personalData:");
-        stringBuilder.append(realmGet$personalData());
+        stringBuilder.append("{imgType:");
+        stringBuilder.append(realmGet$imgType());
+        stringBuilder.append("}");
+        stringBuilder.append(",");
+        stringBuilder.append("{personalInfo:");
+        stringBuilder.append(realmGet$personalInfo());
+        stringBuilder.append("}");
+        stringBuilder.append(",");
+        stringBuilder.append("{shootingTime:");
+        stringBuilder.append(realmGet$shootingTime());
         stringBuilder.append("}");
         stringBuilder.append("]");
         return stringBuilder.toString();
