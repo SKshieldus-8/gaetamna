@@ -1,11 +1,15 @@
 package com.example.gtn
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
@@ -95,8 +99,11 @@ class ThirdActivity : AppCompatActivity() {
 
         // When remove button clicked
         btnRemove.setOnClickListener {
-            // 파일을 개인정보파일 DB에서 제거
+            // 파일을 개인정보파일 DB에서 제거 -> SecondActivity에서 진행
             // setResult를 통해 제거된 사진파일 이름 혹은 imageNum을 SecondActivity로 전송
+            var outIntent = Intent(applicationContext, SecondActivity::class.java)
+            outIntent.putExtra("removedItem", imageFiles!![imageNum].name)
+            setResult(Activity.RESULT_OK, outIntent)
             finish() // 인텐트(ThirdActivity) 종료
         }
 

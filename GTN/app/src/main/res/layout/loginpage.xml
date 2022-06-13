@@ -89,7 +89,7 @@
             android:ems="10"
             android:inputType="textPassword"
             android:minHeight="48dp"
-            android:text="password"
+            android:text="password12!@"
             app:layout_constraintBottom_toTopOf="@+id/LoginPage_button" />
 
     </LinearLayout>
