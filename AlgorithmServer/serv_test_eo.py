@@ -18,13 +18,13 @@ class GtnServer():
     salt = "skshieldus"                         # secret
     access_token = "token"              # PyJWT 사용
 
+    key2 = secrets.token_hex(8)
     test_message = b"Test message for encryption"
 
     key1 = Fernet.generate_key()
     ciphertext = Fernet(key1).encrypt(test_message)        # 암호화문
     plaintext = Fernet(key1).decrypt(ciphertext)                             # 평문 - 복호화
 
-    key2 = secrets.token_hex(8)
     hash = hashlib.sha256(str(key2 + salt).encode('utf-8')).hexdigest()
 
     data = b"secret key"                # 암호화 내용
@@ -98,7 +98,11 @@ def get_key():
 def ocr():
     if request.method == 'POST': 
 
-        # print(GtnServer.key1)                 # Fernet 대칭키
+        print(GtnServer.key1)                 # Fernet 대칭키
+        print(type(GtnServer.key2))
+        print(GtnServer.ciphertext)
+        print(type(GtnServer.ciphertext))
+        print(GtnServer.plaintext)
         # print(GtnServer.key2)
         # print(GtnServer.key3)
         # print(GtnServer.hash)
