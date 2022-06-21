@@ -46,14 +46,6 @@ class SecondActivity : AppCompatActivity(), ActionBar.TabListener {
     lateinit var tab3: ActionBar.Tab
     lateinit var tab4: ActionBar.Tab
 
-    // 대칭키, key IV값. (서버에서 받아옴)
-    /*
-    companion object {
-        const val SECRET_KEY = "ABCDEFGH12345678"
-        const val SECRET_IV = "1234567812345678"
-    }
-
-     */
 
     var myFrags = arrayOfNulls<MyTabFragment>(4)
 
