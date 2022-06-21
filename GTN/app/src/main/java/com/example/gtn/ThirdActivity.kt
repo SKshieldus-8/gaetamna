@@ -7,15 +7,20 @@ import android.os.Bundle
 import android.os.Environment
 import android.util.Base64
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.exifinterface.media.ExifInterface
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.*
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
+
 
 class ThirdActivity : AppCompatActivity() {
 
@@ -31,13 +36,8 @@ class ThirdActivity : AppCompatActivity() {
     lateinit var bitmap: Bitmap
 
     var imageFiles: Array<File>? = null
-
-
-    // 대칭키, key IV값. (서버에서 받아옴)
-    companion object {
-        const val SECRET_KEY = "ABCDEFGH12345678"
-        const val SECRET_IV = "1234567812345678"
-    }
+    private var SECRET_IV : String = ""
+    private var SECRET_KEY : String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,20 +54,61 @@ class ThirdActivity : AppCompatActivity() {
         btnNext = findViewById(R.id.ViewPage_btnNext)
 
         var intent = intent
-        var imageNum = intent.getIntExtra("Num", -1) // -> number
+        //var imageNum = intent.getIntExtra("Num", -1) // -> number
+        var imageName = intent.getStringExtra("ImageName")
         var access_token = intent.getStringExtra("access_token")
+        var imageNum = -1
 
         var filePath = Environment.getExternalStorageDirectory().absolutePath + "/DCIM/Camera"
         imageFiles = File(filePath).listFiles()
 
-        var imagePath = filePath + "/" + imageFiles!![imageNum].name
-        //Log.d("log", "imagePath: $imagePath")
+        for(i in imageFiles!!.indices){
+            if(imageFiles!![i].name == imageName) {
+                imageNum = i
+                break
+            }
+        }
+
+        var imagePath = "$filePath/$imageName"
+
+        //서버로부터 복호화 key 요청
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://43.200.55.96:1337")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        var requestkey: RequestKey = retrofit.create(RequestKey::class.java)
+
+        Log.d("Decryp","호출 시작")
+        try {
+            requestkey.requestkey(access_token).enqueue(object : Callback<dataKey> {
+                override fun onFailure(call: Call<dataKey>, t: Throwable) {
+                    t.message?.let { it1 -> Log.e("KEY", it1) }
+                    var dialog = AlertDialog.Builder(this@ThirdActivity)
+
+                    Log.d("Decryp", "호출 실패")
+                }
+
+                override fun onResponse(call: Call<dataKey>, response: Response<dataKey>) {
+                    var responseKey = response.body()
+
+                    SECRET_IV = responseKey!!.iv
+                    SECRET_KEY = responseKey!!.key
+                }
+            })
+        } catch (e:Exception){
+            Log.d("Exception", "예외발생")
+        }
 
         // Set ImageView
         imageView.scaleType = ImageView.ScaleType.FIT_CENTER
         // 이미지의 긴 쪽을 imageView에 맞춰서 이미지가 크게 보이도록 하기
         bitmap = BitmapFactory.decodeFile(imageFiles!![imageNum].toString())
-        imageView.setImageBitmap(bitmap)
+        //bitmap 크기 줄이기.
+        var resized = resizePhoto(bitmap)
+
+        imageView.setImageBitmap(resized)
+        var shareImage:Bitmap = bitmap
 
         // Set TextView with file's name
         viewName.text = imageFiles!![imageNum].name
@@ -78,17 +119,17 @@ class ThirdActivity : AppCompatActivity() {
             if(switch.isChecked){
                 // 스위치를 켠 경우 비식별화
                 // 해당 메소드 호출
-                var enBitmap = BitmapFactory.decodeFile(imagePath)//photo.absolutePath)
+                var enBitmap = BitmapFactory.decodeFile(imagePath)
 
-                imageView.setImageBitmap(enBitmap)
+                var resized = resizePhoto(enBitmap)
+                imageView.setImageBitmap(resized)
 
-                Toast.makeText(this, "switch is on", Toast.LENGTH_SHORT).show()
             }
             else{
                 // 스위치를 끈 경우 비식별처리 해제
-                // 해당 메소드 호출
+
                 var deBitmap = BitmapFactory.decodeFile(imagePath)//photo.absolutePath)
-                var decrypted = getHiddenData(imagePath, "data").decryptCBC()//photo).decryptCBC()
+                var decrypted = getHiddenData(imagePath, "data").decryptCBC(SECRET_IV, SECRET_KEY)//photo).decryptCBC()
 
                 val list = decrypted.split("||")
 
@@ -100,9 +141,9 @@ class ThirdActivity : AppCompatActivity() {
 
                     deBitmap = overlay(deBitmap, reImage, x, y)
                 }
-                imageView.setImageBitmap(deBitmap)
-
-                Toast.makeText(this, "switch is off", Toast.LENGTH_SHORT).show()
+                var resized = resizePhoto(deBitmap)
+                imageView.setImageBitmap(resized)
+                shareImage = deBitmap
 
             }
         }
@@ -112,22 +153,37 @@ class ThirdActivity : AppCompatActivity() {
             imageView.scaleType = ImageView.ScaleType.FIT_CENTER
             bitmap = BitmapFactory.decodeFile(imageFiles!![--imageNum].toString())
             viewName.text = imageFiles!![imageNum].name
-            imageView.setImageBitmap(bitmap)
+            var resized = resizePhoto(bitmap)
+            imageView.setImageBitmap(resized)
         }
 
-        // 공유버튼?
+        // 공유버튼
         btnShare.setOnClickListener {
             // 에뮬레이터로만 돌릴거면 화면 하나 만들어서 인텐트로 띄우기
             // 실제 휴대폰에 사용할거면 다른 앱과 연결하는 화면 띄우기
-            /*
+
+            var file: File? = null
+            var out: OutputStream? = null
+
+            try{
+                file?.createNewFile()
+                out = FileOutputStream(file)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+            }catch (e: Exception){
+                Log.d("Exception", "예외발생")
+            }finally {
+                out?.close()
+            }
+
+
             val shareIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_STREAM, ) // 변경된 이미지
+                putExtra(Intent.EXTRA_STREAM, file) // 변경된 이미지
                 type = "image/jpeg"
             }
-            startActivity(Intent.createChooser(shareIntent, "idimage"))
+            startActivity(Intent.createChooser(shareIntent, "image"))
 
-             */
+
         }
 
         // 편집버튼?
@@ -141,7 +197,28 @@ class ThirdActivity : AppCompatActivity() {
             // setResult를 통해 제거된 사진파일 이름 혹은 imageNum을 SecondActivity로 전송
             var outIntent = Intent(applicationContext, SecondActivity::class.java)
             outIntent.putExtra("removedItem", imageFiles!![imageNum].name)
+            outIntent.putExtra("type", getHiddenData(imagePath, "type"))
             setResult(Activity.RESULT_OK, outIntent)
+
+            //원본 이미지로 복원 및 저장.
+            var deBitmap = BitmapFactory.decodeFile(imagePath)//photo.absolutePath)
+            var decrypted = getHiddenData(imagePath, "data").decryptCBC(SECRET_IV, SECRET_KEY)//photo).decryptCBC()
+            val list = decrypted.split("||")
+
+            //복호화한 메타데이터를 비트맵에 그림
+            for(i in list.indices step 3){
+                var reImage = StringToBitmap(list[i])
+                var x = list[i+1].toInt()
+                var y = list[i+2].toInt()
+
+                deBitmap = overlay(deBitmap, reImage, x, y)
+            }
+
+            saveFile(imageFiles!![imageNum].name, deBitmap) //마스킹 이미지 저장(원본에 덮어 씌우기)
+            setHiddenData(imagePath, "data", "")
+            setHiddenData(imagePath, "type", "")
+            setHiddenData(imagePath, "flag", "GTN")
+
             finish() // 인텐트(ThirdActivity) 종료
         }
 
@@ -150,7 +227,8 @@ class ThirdActivity : AppCompatActivity() {
             imageView.scaleType = ImageView.ScaleType.FIT_CENTER
             bitmap = BitmapFactory.decodeFile(imageFiles!![++imageNum].toString())
             viewName.text = imageFiles!![imageNum].name
-            imageView.setImageBitmap(bitmap)
+            var resized = resizePhoto(bitmap)
+            imageView.setImageBitmap(resized)
         }
     }
 
@@ -162,7 +240,7 @@ class ThirdActivity : AppCompatActivity() {
     }
 
     // * CBC 암호화 메서드
-    private fun String.encryptCBC(): String {
+    private fun String.encryptCBC(SECRET_IV: String, SECRET_KEY:String): String {
         val iv = IvParameterSpec(SECRET_IV.toByteArray())
         val keySpec = SecretKeySpec(SECRET_KEY.toByteArray(), "AES")    /// 키
         val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")     //싸이퍼
@@ -175,7 +253,7 @@ class ThirdActivity : AppCompatActivity() {
 
 
     // * CBC 복호화 메서드
-    private fun String.decryptCBC(): String {
+    private fun String.decryptCBC(SECRET_IV: String, SECRET_KEY:String): String {
         var decodedByte: ByteArray = Base64.decode(this, Base64.DEFAULT)
         val iv = IvParameterSpec(SECRET_IV.toByteArray())
         val keySpec = SecretKeySpec(SECRET_KEY.toByteArray(), "AES")
@@ -192,7 +270,7 @@ class ThirdActivity : AppCompatActivity() {
         try {
             exif = ExifInterface(imagePath)
         } catch (e : IOException) {
-            e.printStackTrace()
+            Log.d("Exception", "예외발생")
         }
         when(Tag){
             "data" -> exif?.setAttribute(ExifInterface.TAG_USER_COMMENT, data)//data
@@ -209,7 +287,7 @@ class ThirdActivity : AppCompatActivity() {
         try {
             exif = ExifInterface(imagePath)
         } catch (e : IOException) {
-            e.printStackTrace()
+            Log.d("Exception", "예외발생")
         }
         var meta : String = ""
         when(Tag){
@@ -259,7 +337,7 @@ class ThirdActivity : AppCompatActivity() {
         return bmMask
     }
 
-
+    //이미지 저장
     private fun saveFile(imgName:String, newImage: Bitmap) {
         var fos: OutputStream? = null
 
@@ -271,7 +349,17 @@ class ThirdActivity : AppCompatActivity() {
         fos?.use {
             newImage.compress(Bitmap.CompressFormat.PNG, 100, it)
         }
+    }
 
+    fun resizePhoto(bitmap: Bitmap): Bitmap {
+        val w = bitmap.width
+        val h = bitmap.height
+        val aspRat = w / h
+        val W = w/2
+        val H = h/2
+        val b = Bitmap.createScaledBitmap(bitmap, W, H, false)
+
+        return b
     }
 
 }

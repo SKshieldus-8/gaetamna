@@ -2,7 +2,6 @@ package com.example.gtn
 
 import android.content.Context
 import android.content.Intent
-import com.google.android.material.snackbar.Snackbar
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
@@ -20,7 +19,7 @@ import java.util.regex.Pattern
 class MainActivity : AppCompatActivity(){
     lateinit var edittext_id: EditText
     lateinit var edittext_password: EditText
-    lateinit var btnLogin: Button
+    lateinit var btnLogin: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,20 +69,11 @@ class MainActivity : AppCompatActivity(){
 
                     override fun onResponse(call: Call<Login>, response: Response<Login>) {
                         var login = response.body()
-                        Log.d("LOGIN","msg : "+login?.access_token)
+                        Log.d("LOGIN","token : "+login?.access_token)
                         Log.d("LOGIN","code : "+login?.result)
-                        Log.d("LOGIN", "token: ${login?.msg}")
+                        Log.d("LOGIN", "msg: ${login?.msg}")
                         TorF = login?.result
                         access_token = login?.access_token
-
-                        var dialog = AlertDialog.Builder(this@MainActivity)
-                        /*
-                        dialog.setTitle(login?.access_token)
-                        dialog.setMessage(login?.result)
-                        dialog.show()
-                         */
-                        //Log.d("TorF", "${TorF}")
-                        //Log.d("token", "${access_token}")
 
                         // 아이디 혹은 비밀번호가 일치하지 않는 경우
                         if (TorF == "0") { //TorF 변수정의 필요
